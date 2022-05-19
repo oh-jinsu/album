@@ -36,7 +36,7 @@ class AddAlbumDialog extends Component {
                 children: [
                   CupertinoTextField(
                     autofocus: true,
-                    enabled: data.submitFormState != SubmitFormState.pending,
+                    enabled: data.state != SubmitFormState.pending,
                     placeholder: "앨범의 제목을 입력해 주세요.",
                     clearButtonMode: OverlayVisibilityMode.editing,
                     placeholderStyle: const TextStyle(
@@ -53,7 +53,7 @@ class AddAlbumDialog extends Component {
                       child: Text(
                         data.message!,
                         style: const TextStyle(
-                          color: CupertinoColors.systemRed,
+                          color: CupertinoColors.destructiveRed,
                         ),
                       ),
                     ),
@@ -63,7 +63,7 @@ class AddAlbumDialog extends Component {
             actions: [
               CupertinoButton(
                 onPressed: () {
-                  if (data.submitFormState == SubmitFormState.pending) {
+                  if (data.state == SubmitFormState.pending) {
                     return;
                   }
 
@@ -76,7 +76,7 @@ class AddAlbumDialog extends Component {
                   ),
                 ),
               ),
-              if (data.submitFormState == SubmitFormState.enabled)
+              if (data.state == SubmitFormState.enabled)
                 CupertinoButton(
                   onPressed: () => dispatch(
                     AlbumFormSumitted(
@@ -85,7 +85,7 @@ class AddAlbumDialog extends Component {
                   ),
                   child: const Text("추가"),
                 )
-              else if (data.submitFormState == SubmitFormState.pending)
+              else if (data.state == SubmitFormState.pending)
                 CupertinoButton(
                   onPressed: () {},
                   child: const CupertinoActivityIndicator(),

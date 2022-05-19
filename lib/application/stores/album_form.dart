@@ -8,13 +8,13 @@ import "package:codux/codux.dart";
 const initialState = AlbumFormModel(
   title: "",
   message: null,
-  submitFormState: SubmitFormState.disabled,
+  state: SubmitFormState.disabled,
 );
 
 class AlbumFormStore extends Store<AlbumFormModel> {
   AlbumFormStore() : super(initialState: initialState) {
     on<AlbumFormTitleChanged>((current, event) {
-      if (current.state.submitFormState == ButtonState.pending) {
+      if (current.state.state == ButtonState.pending) {
         return current.state;
       }
 
@@ -23,25 +23,25 @@ class AlbumFormStore extends Store<AlbumFormModel> {
       if (event.value.isEmpty) {
         return copy.copy(
           message: const New("제목은 1글자보다 길어야 해요."),
-          submitFormState: const New(SubmitFormState.disabled),
+          state: const New(SubmitFormState.disabled),
         );
       }
 
       if (event.value.length > 24) {
         return copy.copy(
           message: const New("제목은 24글자보다 짧아야 해요."),
-          submitFormState: const New(SubmitFormState.disabled),
+          state: const New(SubmitFormState.disabled),
         );
       }
 
       return copy.copy(
         message: const New(null),
-        submitFormState: const New(SubmitFormState.enabled),
+        state: const New(SubmitFormState.enabled),
       );
     });
     on<AlbumFormPending>((current, event) {
       return current.state.copy(
-        submitFormState: const New(SubmitFormState.pending),
+        state: const New(SubmitFormState.pending),
       );
     });
   }

@@ -1,9 +1,16 @@
 import 'package:album/presentation/components/common/widgets/button.dart';
+import 'package:album/presentation/modals/photo_form.dart';
 import "package:codux/codux.dart";
 import 'package:flutter/cupertino.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class AlbumBottomNavigationComponent extends Component {
-  const AlbumBottomNavigationComponent({super.key});
+  final String id;
+
+  const AlbumBottomNavigationComponent({
+    super.key,
+    required this.id,
+  });
 
   @override
   Widget render(BuildContext context) {
@@ -19,13 +26,22 @@ class AlbumBottomNavigationComponent extends Component {
               child: const Icon(
                 CupertinoIcons.person_2,
               ),
-              onPressed: () => {},
+              onPressed: () {},
             ),
             Button(
-                child: const Icon(
-                  CupertinoIcons.plus_square,
-                ),
-                onPressed: () {}),
+              child: const Icon(
+                CupertinoIcons.plus_square,
+              ),
+              onPressed: () {
+                CupertinoScaffold.showCupertinoModalBottomSheet(
+                  expand: true,
+                  context: context,
+                  builder: (context) => PhotoFormModal(
+                    id: id,
+                  ),
+                );
+              },
+            ),
             Button(
               child: const Icon(
                 CupertinoIcons.ellipsis_circle,
