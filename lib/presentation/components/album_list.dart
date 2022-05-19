@@ -1,3 +1,4 @@
+import 'package:album/application/events/navigation/pushed.dart';
 import 'package:album/application/models/album/list_of.dart';
 import 'package:album/application/stores/list_of_album.dart';
 import 'package:album/presentation/widgets/album_tile.dart';
@@ -22,7 +23,20 @@ class ListOfAlbumComponent extends Component {
             padding: const EdgeInsets.all(16.0),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            children: [for (final item in data.items) AlbumTile(item: item)],
+            children: [
+              for (final item in data.items)
+                AlbumTile(
+                  onTap: () {
+                    dispatch(
+                      Pushed("/album", arguments: {
+                        "id": item.id,
+                        "title": item.title,
+                      }),
+                    );
+                  },
+                  item: item,
+                )
+            ],
           );
         }
         return Container();

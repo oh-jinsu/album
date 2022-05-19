@@ -1,13 +1,14 @@
-import 'package:album/application/effects/auto_sign_in.dart';
-import 'package:album/application/effects/bootstrap.dart';
-import 'package:album/application/effects/escort.dart';
-import 'package:album/application/effects/guest_sign_in.dart';
-import 'package:album/application/effects/invitation.dart';
-import 'package:album/application/effects/navigation.dart';
-import 'package:album/application/effects/prefetch_album_list.dart';
-import 'package:album/application/effects/prefetch_user.dart';
+import 'package:album/application/effects/app/auto_sign_in.dart';
+import 'package:album/application/effects/app/bootstrap.dart';
+import 'package:album/application/effects/app/escort.dart';
+import 'package:album/application/effects/app/guest_sign_in.dart';
+import 'package:album/application/effects/app/invitation.dart';
+import 'package:album/application/effects/app/navigation.dart';
+import 'package:album/application/effects/app/prefetch_album_list.dart';
+import 'package:album/application/effects/app/prefetch_user.dart';
 import 'package:album/application/events/app/started.dart';
 import 'package:album/application/stores/list_of_album.dart';
+import 'package:album/presentation/pages/album.dart';
 import 'package:album/presentation/pages/home.dart';
 import 'package:album/presentation/pages/invitation.dart';
 import 'package:album/presentation/pages/splash.dart';
@@ -65,6 +66,13 @@ class App extends Component {
           return CupertinoPageRoute(
             settings: settings,
             builder: (context) => const HomePage(),
+          );
+        }
+
+        if (settings.name == "/album") {
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const AlbumPage(),
           );
         }
 
