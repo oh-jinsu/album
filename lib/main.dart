@@ -1,6 +1,8 @@
 import 'package:album/effects/auto_sign_in.dart';
 import 'package:album/effects/bootstrap.dart';
+import 'package:album/effects/guest_sign_in.dart';
 import 'package:album/effects/navigation.dart';
+import 'package:album/effects/prefetch_user.dart';
 import 'package:album/events/app_started.dart';
 import 'package:album/pages/home.dart';
 import 'package:album/pages/splash.dart';
@@ -18,6 +20,8 @@ class App extends Component {
     useEffect(() => NavigationEffect());
     useEffect(() => BootstrapEffect());
     useEffect(() => AutoSignInEffect());
+    useEffect(() => GuestSignInEffect());
+    useEffect(() => PrefetchUserEffect());
 
     super.onCreated(context);
   }
