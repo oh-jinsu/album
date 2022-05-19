@@ -1,11 +1,11 @@
-import 'package:album/events/album/list_of_found.dart';
-import 'package:album/events/album/prefetched.dart';
-import 'package:album/events/user/prefetched.dart';
-import 'package:album/models/album/list_of.dart';
-import 'package:album/repositories/auth.dart';
-import 'package:album/services/client/client.dart';
-import 'package:album/services/client/response.dart';
-import 'package:album/utils/dependency.dart';
+import 'package:album/application/events/album/list_of_found.dart';
+import 'package:album/application/events/album/prefetched.dart';
+import 'package:album/application/events/user/prefetched.dart';
+import 'package:album/application/models/album/list_of.dart';
+import 'package:album/infrastructure/repositories/auth.dart';
+import 'package:album/infrastructure/services/client/client.dart';
+import 'package:album/infrastructure/services/client/response.dart';
+import 'package:album/utility/dependency.dart';
 import 'package:codux/codux.dart';
 
 class PrefetchAlbumListEffect extends Effect {

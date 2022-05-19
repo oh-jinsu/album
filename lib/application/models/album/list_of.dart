@@ -1,4 +1,4 @@
-import 'package:album/models/album/album.dart';
+import 'package:album/application/models/album/album.dart';
 
 class ListOfAlbumModel {
   final String? next;

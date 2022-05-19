@@ -1,9 +1,9 @@
-import 'package:album/events/signin/auto_sign_in_failed.dart';
-import 'package:album/events/signin/guest_sign_in_succeed.dart';
-import 'package:album/repositories/auth.dart';
-import 'package:album/services/client/client.dart';
-import 'package:album/services/client/response.dart';
-import 'package:album/utils/dependency.dart';
+import 'package:album/application/events/signin/auto_sign_in_failed.dart';
+import 'package:album/application/events/signin/guest_sign_in_succeed.dart';
+import 'package:album/infrastructure/repositories/auth.dart';
+import 'package:album/infrastructure/services/client/client.dart';
+import 'package:album/infrastructure/services/client/response.dart';
+import 'package:album/utility/dependency.dart';
 import 'package:codux/codux.dart';
 
 class GuestSignInEffect extends Effect {

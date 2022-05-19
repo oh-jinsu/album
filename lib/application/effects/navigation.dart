@@ -1,6 +1,6 @@
-import 'package:album/events/navigation/popped.dart';
-import 'package:album/events/navigation/pushed.dart';
-import 'package:album/events/navigation/replaced.dart';
+import 'package:album/application/events/navigation/popped.dart';
+import 'package:album/application/events/navigation/pushed.dart';
+import 'package:album/application/events/navigation/replaced.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 

@@ -1,6 +1,6 @@
-import 'package:album/events/album/prefetched.dart';
-import 'package:album/events/app/escorted.dart';
-import 'package:album/events/navigation/replaced.dart';
+import 'package:album/application/events/album/prefetched.dart';
+import 'package:album/application/events/app/escorted.dart';
+import 'package:album/application/events/navigation/replaced.dart';
 import 'package:codux/codux.dart';
 
 class EscortEffect extends Effect {

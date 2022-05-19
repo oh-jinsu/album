@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:album/services/client/response.dart';
-import 'package:album/utils/debug.dart';
+import 'package:album/infrastructure/services/client/response.dart';
+import 'package:album/utility/debug.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 

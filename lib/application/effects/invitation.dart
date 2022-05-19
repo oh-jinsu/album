@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:album/events/app/escorted.dart';
-import 'package:album/events/navigation/pushed.dart';
+import 'package:album/application/events/app/escorted.dart';
+import 'package:album/application/events/navigation/pushed.dart';
 import 'package:codux/codux.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
