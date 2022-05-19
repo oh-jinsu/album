@@ -1,4 +1,5 @@
 import 'package:album/application/models/album/friend.dart';
+import 'package:album/application/models/common/argument.dart';
 
 class AlbumModel {
   final String id;
@@ -28,7 +29,28 @@ class AlbumModel {
       friends:
           (json["users"] as List).map((e) => FriendModel.fromjson(e)).toList(),
       updatedAt: DateTime.parse(json["updated_at"]),
-      createdAt: json["created_at"],
+      createdAt: DateTime.parse(json["created_at"]),
+    );
+  }
+
+  AlbumModel copy({
+    New<String>? id,
+    New<String>? title,
+    New<String?>? coverImageUri,
+    New<int>? photoCount,
+    New<List<FriendModel>>? friends,
+    New<DateTime>? updatedAt,
+    New<DateTime>? createdAt,
+  }) {
+    return AlbumModel(
+      id: id != null ? id.value : this.id,
+      title: title != null ? title.value : this.title,
+      coverImageUri:
+          coverImageUri != null ? coverImageUri.value : this.coverImageUri,
+      photoCount: photoCount != null ? photoCount.value : this.photoCount,
+      friends: friends != null ? friends.value : this.friends,
+      updatedAt: updatedAt != null ? updatedAt.value : this.updatedAt,
+      createdAt: createdAt != null ? createdAt.value : this.createdAt,
     );
   }
 }
