@@ -3,7 +3,7 @@ import 'package:album/application/events/signin/guest_sign_in_succeed.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
 import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
-import 'package:album/utility/dependency.dart';
+import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 
 class GuestSignInEffect extends Effect {

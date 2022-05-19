@@ -8,7 +8,7 @@ import 'package:album/firebase_options.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
 import 'package:album/infrastructure/repositories/image.dart';
 import 'package:album/infrastructure/services/client/client.dart';
-import 'package:album/utility/dependency.dart';
+import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

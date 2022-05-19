@@ -2,8 +2,8 @@ import 'package:album/presentation/widgets/button.dart';
 import "package:codux/codux.dart";
 import 'package:flutter/cupertino.dart';
 
-class HomeAppBar extends Component {
-  const HomeAppBar({Key? key}) : super(key: key);
+class HomeAppBarComponent extends Component {
+  const HomeAppBarComponent({Key? key}) : super(key: key);
 
   @override
   Widget render(BuildContext context) {

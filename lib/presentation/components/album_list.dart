@@ -1,11 +1,32 @@
+import 'package:album/application/models/album/list_of.dart';
+import 'package:album/application/stores/list_of_album.dart';
+import 'package:album/presentation/widgets/album_tile.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 
-class AlbumListComponent extends Component {
-  const AlbumListComponent({Key? key}) : super(key: key);
+class ListOfAlbumComponent extends Component {
+  const ListOfAlbumComponent({Key? key}) : super(key: key);
 
   @override
   Widget render(BuildContext context) {
-    return Container();
+    return StreamBuilder(
+      stream: find<ListOfAlbumStore>().stream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final data = snapshot.data as ListOfAlbumModel;
+
+          return GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12.0,
+            childAspectRatio: 1 / 1.6,
+            padding: const EdgeInsets.all(16.0),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [for (final item in data.items) AlbumTile(item: item)],
+          );
+        }
+        return Container();
+      },
+    );
   }
 }

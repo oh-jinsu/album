@@ -11,8 +11,8 @@ class HomePage extends Component {
   @override
   Widget render(BuildContext context) {
     return const HomeLayout(
-      appBar: HomeAppBar(),
-      body: AlbumListComponent(),
+      appBar: HomeAppBarComponent(),
+      body: ListOfAlbumComponent(),
       bottomNavigationBar: BottomNavigationComponent(),
     );
   }

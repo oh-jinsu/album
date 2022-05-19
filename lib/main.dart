@@ -7,6 +7,7 @@ import 'package:album/application/effects/navigation.dart';
 import 'package:album/application/effects/prefetch_album_list.dart';
 import 'package:album/application/effects/prefetch_user.dart';
 import 'package:album/application/events/app/started.dart';
+import 'package:album/application/stores/list_of_album.dart';
 import 'package:album/presentation/pages/home.dart';
 import 'package:album/presentation/pages/invitation.dart';
 import 'package:album/presentation/pages/splash.dart';
@@ -21,6 +22,8 @@ class App extends Component {
 
   @override
   void onCreated(BuildContext context) {
+    useStore(() => ListOfAlbumStore());
+
     useEffect(() => NavigationEffect());
     useEffect(() => InvitationEffect());
     useEffect(() => BootstrapEffect(), until: SplashPage);
