@@ -10,9 +10,9 @@ class InvitationEffect extends Effect {
 
   InvitationEffect() {
     on<Escorted>((event) async {
-      FirebaseDynamicLinks.instance
-        ..getInitialLink().then(_onLink)
-        ..onLink.listen(_onLink);
+      FirebaseDynamicLinks.instance.getInitialLink().then(_onLink);
+
+      subscription = FirebaseDynamicLinks.instance.onLink.listen(_onLink);
     });
   }
 
@@ -28,5 +28,12 @@ class InvitationEffect extends Effect {
         "token": link.queryParameters["token"],
       }));
     }
+  }
+
+  @override
+  void onDispose() {
+    subscription?.cancel();
+
+    super.onDispose();
   }
 }
