@@ -1,4 +1,4 @@
-import 'package:album/events/app_started.dart';
+import 'package:album/events/app/started.dart';
 import 'package:album/events/bootstrap/bootstrap_finished.dart';
 import 'package:album/events/bootstrap/env_loaded.dart';
 import 'package:album/events/bootstrap/infra_loaded.dart';

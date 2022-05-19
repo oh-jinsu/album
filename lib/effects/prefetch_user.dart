@@ -2,7 +2,7 @@ import 'package:album/events/signin/auto_sign_in_succeed.dart';
 import 'package:album/events/signin/guest_sign_in_succeed.dart';
 import 'package:album/events/user/found.dart';
 import 'package:album/events/user/prefetched.dart';
-import 'package:album/models/user.dart';
+import 'package:album/models/user/user.dart';
 import 'package:album/repositories/auth.dart';
 import 'package:album/services/client/client.dart';
 import 'package:album/services/client/response.dart';

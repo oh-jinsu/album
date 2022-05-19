@@ -1,10 +1,14 @@
 import 'package:album/effects/auto_sign_in.dart';
 import 'package:album/effects/bootstrap.dart';
+import 'package:album/effects/escort.dart';
 import 'package:album/effects/guest_sign_in.dart';
+import 'package:album/effects/invitation.dart';
 import 'package:album/effects/navigation.dart';
+import 'package:album/effects/prefetch_album_list.dart';
 import 'package:album/effects/prefetch_user.dart';
-import 'package:album/events/app_started.dart';
+import 'package:album/events/app/started.dart';
 import 'package:album/pages/home.dart';
+import 'package:album/pages/invitation.dart';
 import 'package:album/pages/splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:codux/codux.dart';
@@ -18,10 +22,13 @@ class App extends Component {
   @override
   void onCreated(BuildContext context) {
     useEffect(() => NavigationEffect());
-    useEffect(() => BootstrapEffect());
-    useEffect(() => AutoSignInEffect());
-    useEffect(() => GuestSignInEffect());
-    useEffect(() => PrefetchUserEffect());
+    useEffect(() => InvitationEffect());
+    useEffect(() => BootstrapEffect(), until: SplashPage);
+    useEffect(() => AutoSignInEffect(), until: SplashPage);
+    useEffect(() => GuestSignInEffect(), until: SplashPage);
+    useEffect(() => PrefetchUserEffect(), until: SplashPage);
+    useEffect(() => PrefetchAlbumListEffect(), until: SplashPage);
+    useEffect(() => EscortEffect(), until: SplashPage);
 
     super.onCreated(context);
   }
@@ -38,11 +45,24 @@ class App extends Component {
     return CupertinoApp(
       onGenerateRoute: (settings) {
         if (settings.name == "/splash") {
-          return CupertinoPageRoute(builder: (context) => const SplashPage());
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const SplashPage(),
+          );
+        }
+
+        if (settings.name == "/invitation") {
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const InvitationPage(),
+          );
         }
 
         if (settings.name == "/home") {
-          return CupertinoPageRoute(builder: (context) => const HomePage());
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const HomePage(),
+          );
         }
 
         return null;
