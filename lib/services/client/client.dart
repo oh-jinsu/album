@@ -11,7 +11,7 @@ typedef Fetcher = Future<http.Response> Function(
   Map<String, String>? headers,
 });
 
-class Client {
+class ClientService {
   Future<Response> get(
     String endpoint, {
     Map<String, String> headers = const {},

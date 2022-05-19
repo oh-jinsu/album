@@ -1,4 +1,6 @@
 class Dependency {
+  Dependency._();
+
   static final Map<String, dynamic> _manifest = {};
 
   static void assign<T>(T instance) {

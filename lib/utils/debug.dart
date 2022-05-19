@@ -3,6 +3,8 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 
 class Debug {
+  Debug._();
+
   static void log(Object object) {
     if (kDebugMode) {
       final now = DateTime.now();

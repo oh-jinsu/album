@@ -1,7 +1,10 @@
+import 'package:album/effects/auto_sign_in.dart';
 import 'package:album/effects/bootstrap.dart';
+import 'package:album/effects/navigation.dart';
 import 'package:album/events/app_started.dart';
+import 'package:album/pages/home.dart';
+import 'package:album/pages/splash.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -12,7 +15,9 @@ class App extends Component {
 
   @override
   void onCreated(BuildContext context) {
-    useEffect(() => BootstrapEffects());
+    useEffect(() => NavigationEffect());
+    useEffect(() => BootstrapEffect());
+    useEffect(() => AutoSignInEffect());
 
     super.onCreated(context);
   }
@@ -28,8 +33,17 @@ class App extends Component {
   Widget render(BuildContext context) {
     return CupertinoApp(
       onGenerateRoute: (settings) {
+        if (settings.name == "/splash") {
+          return CupertinoPageRoute(builder: (context) => const SplashPage());
+        }
+
+        if (settings.name == "/home") {
+          return CupertinoPageRoute(builder: (context) => const HomePage());
+        }
+
         return null;
       },
+      initialRoute: "/splash",
       builder: (context, child) {
         return MediaQuery(
           child: child!,
@@ -44,11 +58,6 @@ class App extends Component {
         Locale('ko'),
         Locale('en'),
       ],
-      home: const Scaffold(
-        body: Center(
-          child: CupertinoActivityIndicator(),
-        ),
-      ),
     );
   }
 }
