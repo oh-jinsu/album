@@ -1,5 +1,5 @@
 import 'package:album/application/models/album/album.dart';
-import 'package:album/presentation/widgets/album_tile_avatar.dart';
+import 'package:album/presentation/components/home/widgets/album_tile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

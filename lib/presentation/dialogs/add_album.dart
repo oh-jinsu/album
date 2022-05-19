@@ -8,8 +8,8 @@ import 'package:album/application/stores/album_form.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 
-class AddAlbumDialogComponent extends Component {
-  const AddAlbumDialogComponent({Key? key}) : super(key: key);
+class AddAlbumDialog extends Component {
+  const AddAlbumDialog({Key? key}) : super(key: key);
 
   @override
   void onCreated(BuildContext context) {
@@ -21,7 +21,7 @@ class AddAlbumDialogComponent extends Component {
 
   @override
   Widget render(BuildContext context) {
-    return StreamBuilder<Object>(
+    return StreamBuilder(
       stream: find<AlbumFormStore>().stream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {

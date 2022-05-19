@@ -1,7 +1,7 @@
 import 'package:album/application/events/navigation/pushed.dart';
 import 'package:album/application/models/album/list_of.dart';
 import 'package:album/application/stores/list_of_album.dart';
-import 'package:album/presentation/widgets/album_tile.dart';
+import 'package:album/presentation/components/home/home/album_tile.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 

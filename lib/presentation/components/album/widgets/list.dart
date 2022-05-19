@@ -1,22 +1,22 @@
 import 'package:album/application/models/photo/photo.dart';
-import 'package:album/presentation/widgets/album/floor.dart';
+import 'package:album/presentation/components/album/widgets/floor.dart';
 import 'package:flutter/cupertino.dart';
 
-class AlbumListWidget extends StatefulWidget {
+class PhotoStackWidget extends StatefulWidget {
   final String albumId;
   final List<PhotoModel> items;
 
-  const AlbumListWidget({
+  const PhotoStackWidget({
     Key? key,
     required this.albumId,
     required this.items,
   }) : super(key: key);
 
   @override
-  State<AlbumListWidget> createState() => _AlbumListWidgetState();
+  State<PhotoStackWidget> createState() => _PhotoStackWidgetState();
 }
 
-class _AlbumListWidgetState extends State<AlbumListWidget> {
+class _PhotoStackWidgetState extends State<PhotoStackWidget> {
   final List<PhotoModel> _items = [];
 
   @override
@@ -27,7 +27,7 @@ class _AlbumListWidgetState extends State<AlbumListWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant AlbumListWidget oldWidget) {
+  void didUpdateWidget(covariant PhotoStackWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     final updatedList = widget.items.where(

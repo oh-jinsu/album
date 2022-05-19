@@ -1,5 +1,5 @@
-import 'package:album/presentation/components/add_album_dialog.dart';
-import 'package:album/presentation/widgets/button.dart';
+import 'package:album/presentation/components/common/widgets/button.dart';
+import 'package:album/presentation/dialogs/add_album.dart';
 import "package:codux/codux.dart";
 import 'package:flutter/cupertino.dart';
 
@@ -13,7 +13,7 @@ class HomeAppBarComponent extends Component {
       leading: Button(
         onPressed: () => showCupertinoDialog(
           context: context,
-          builder: (context) => const AddAlbumDialogComponent(),
+          builder: (context) => const AddAlbumDialog(),
         ),
         child: const Icon(CupertinoIcons.add),
       ),

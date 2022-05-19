@@ -1,7 +1,6 @@
-import 'package:album/presentation/components/album_list.dart';
-import 'package:album/presentation/components/bottom_navigation.dart';
-import 'package:album/presentation/components/home_app_bar.dart';
-import 'package:album/presentation/layouts/home.dart';
+import 'package:album/presentation/components/common/bottom_navigation.dart';
+import 'package:album/presentation/components/home/album_list.dart';
+import 'package:album/presentation/components/home/app_bar.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -10,10 +9,22 @@ class HomePage extends Component {
 
   @override
   Widget render(BuildContext context) {
-    return const HomeLayout(
-      appBar: HomeAppBarComponent(),
-      body: ListOfAlbumComponent(),
-      bottomNavigationBar: BottomNavigationComponent(),
+    return CupertinoPageScaffold(
+      child: Column(
+        children: const [
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                HomeAppBarComponent(),
+                SliverToBoxAdapter(
+                  child: ListOfAlbumComponent(),
+                )
+              ],
+            ),
+          ),
+          BottomNavigationComponent(),
+        ],
+      ),
     );
   }
 }
