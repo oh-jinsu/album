@@ -1,3 +1,4 @@
+import 'package:album/application/effects/photo/precache_added.dart';
 import 'package:album/presentation/components/album/album_viewer.dart';
 import 'package:album/presentation/components/album/bottom_navgiation.dart';
 import 'package:album/presentation/components/album/widgets/app_bar.dart';
@@ -7,6 +8,13 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class AlbumPage extends Component {
   const AlbumPage({Key? key}) : super(key: key);
+
+  @override
+  void onCreated(BuildContext context) {
+    useEffect(() => PrecacheAddedPhotoEffect());
+
+    super.onCreated(context);
+  }
 
   @override
   Widget render(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:codux/codux.dart';
 
-class PhotoFormDescriptionChanged extends Event {
+class PhotoFormDescriptionChanged implements Event {
   final String value;
 
   const PhotoFormDescriptionChanged(this.value);

@@ -1,6 +1,6 @@
 import "package:codux/codux.dart";
 
-class AlbumFormTitleChanged extends Event {
+class AlbumFormTitleChanged implements Event {
   final String value;
 
   const AlbumFormTitleChanged(this.value);

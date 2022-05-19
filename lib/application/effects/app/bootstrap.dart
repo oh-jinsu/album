@@ -8,6 +8,7 @@ import 'package:album/firebase_options.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
 import 'package:album/infrastructure/repositories/image.dart';
 import 'package:album/infrastructure/services/client/client.dart';
+import 'package:album/infrastructure/services/precache/precache.dart';
 import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,6 +36,7 @@ class BootstrapEffect extends Effect {
     });
     on<RepositoryLoaded>((event) {
       Dependency.assign<ClientService>(ClientService());
+      Dependency.assign<PrecacheService>(PrecacheService());
 
       dispatch(const ServiceLoaded());
     });

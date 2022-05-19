@@ -1,5 +1,5 @@
 import "package:codux/codux.dart";
 
-class AlbumFormSubmitFailed extends Event {
+class AlbumFormSubmitFailed implements Event {
   const AlbumFormSubmitFailed();
 }

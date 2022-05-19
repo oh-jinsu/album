@@ -1,8 +1,8 @@
 import 'package:album/application/models/photo/photo.dart';
 import "package:codux/codux.dart";
 
-class PhotoAdded implements Event {
+class PrecachedPhotoAdded implements Event {
   final PhotoModel model;
 
-  const PhotoAdded(this.model);
+  const PrecachedPhotoAdded(this.model);
 }

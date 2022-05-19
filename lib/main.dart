@@ -1,5 +1,6 @@
 import 'package:album/application/effects/app/auto_sign_in.dart';
 import 'package:album/application/effects/app/bootstrap.dart';
+import 'package:album/application/effects/app/precache_album_list.dart';
 import 'package:album/application/effects/app/escort.dart';
 import 'package:album/application/effects/app/guest_sign_in.dart';
 import 'package:album/application/effects/app/invitation.dart';
@@ -32,6 +33,7 @@ class App extends Component {
     useEffect(() => GuestSignInEffect(), until: SplashPage);
     useEffect(() => PrefetchUserEffect(), until: SplashPage);
     useEffect(() => PrefetchAlbumListEffect(), until: SplashPage);
+    useEffect(() => PrecacheAlbumListEffect(), until: SplashPage);
     useEffect(() => EscortEffect(), until: SplashPage);
 
     super.onCreated(context);

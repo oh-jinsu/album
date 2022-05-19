@@ -1,12 +1,12 @@
-import 'package:album/application/events/photo/added.dart';
-import 'package:album/application/events/photo/list_of_found.dart';
+import 'package:album/application/events/photo/precached_added.dart';
+import 'package:album/application/events/photo/precached_list_of_photo_found.dart';
 import 'package:album/application/models/common/argument.dart';
 import 'package:album/application/models/photo/list_of_photo.dart';
 import 'package:codux/codux.dart';
 
 class ListOfPhotoStore extends Store<ListOfPhotoModel> {
   ListOfPhotoStore() {
-    on<ListOfPhotoFound>((current, event) {
+    on<PrecachedListOfPhotoFound>((current, event) {
       if (current.hasState) {
         return current.state.copy(
           next: New(event.model.next),
@@ -16,7 +16,7 @@ class ListOfPhotoStore extends Store<ListOfPhotoModel> {
 
       return event.model;
     });
-    on<PhotoAdded>((current, event) {
+    on<PrecachedPhotoAdded>((current, event) {
       if (current.hasState) {
         return current.state.copy(
           items: New([event.model, ...current.state.items]),

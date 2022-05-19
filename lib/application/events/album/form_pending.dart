@@ -1,5 +1,5 @@
 import 'package:codux/codux.dart';
 
-class AlbumFormPending extends Event {
+class AlbumFormPending implements Event {
   const AlbumFormPending();
 }
