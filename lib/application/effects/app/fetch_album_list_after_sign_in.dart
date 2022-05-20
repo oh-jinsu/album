@@ -10,15 +10,17 @@ import 'package:codux/codux.dart';
 class FetchAlbumListAfterSignInEffect extends Effect {
   FetchAlbumListAfterSignInEffect() {
     on<UserPrefetched>((event) async {
-      final authRepository = Dependency.inject<AuthRepository>();
+      final authRepository = Dependency.find<AuthRepository>();
 
-      final clientService = Dependency.inject<ClientService>();
+      final client = Dependency.find<Client>();
 
       final accessToken = await authRepository.findAccessToken();
 
-      final response = await clientService.get("album", headers: {
-        "Authorization": "Bearer $accessToken",
-      });
+      if (accessToken == null) {
+        return;
+      }
+
+      final response = await client.auth(accessToken).get("album");
 
       if (response is! SuccessResponse) {
         return;

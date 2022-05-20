@@ -7,7 +7,7 @@ import 'package:codux/codux.dart';
 class PickSignUpFormAvatarEffect extends Effect {
   PickSignUpFormAvatarEffect() {
     on<SignUpFormAvatarPickerTapped>((event) async {
-      final imageRepository = Dependency.inject<ImageRepository>();
+      final imageRepository = Dependency.find<ImageRepository>();
 
       final file = await imageRepository.pickFromGallery();
 

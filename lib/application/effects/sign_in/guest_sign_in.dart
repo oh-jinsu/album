@@ -9,10 +9,10 @@ import 'package:codux/codux.dart';
 class GuestSignInEffect extends Effect {
   GuestSignInEffect() {
     on<GuestSignInRequested>((event) async {
-      final authRepository = Dependency.inject<AuthRepository>();
-      final clientService = Dependency.inject<ClientService>();
+      final authRepository = Dependency.find<AuthRepository>();
+      final client = Dependency.find<Client>();
 
-      final response = await clientService.get("auth/guest");
+      final response = await client.get("auth/guest");
 
       if (response is! SuccessResponse) {
         return;

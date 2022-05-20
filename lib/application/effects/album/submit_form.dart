@@ -12,23 +12,21 @@ import 'package:codux/codux.dart';
 class SubmitAlbumFormEffect extends Effect {
   SubmitAlbumFormEffect() {
     on<AlbumFormSumitted>((event) async {
-      final authRepoisotry = Dependency.inject<AuthRepository>();
+      final authRepoisotry = Dependency.find<AuthRepository>();
 
-      final clientService = Dependency.inject<ClientService>();
+      final client = Dependency.find<Client>();
 
       dispatch(const AlbumFormPending());
 
       final accessToken = await authRepoisotry.findAccessToken();
 
-      final response = await clientService.post(
-        "album",
-        headers: {
-          "Authorization": "Bearer $accessToken",
-        },
-        body: {
-          "title": event.title,
-        },
-      );
+      if (accessToken == null) {
+        return;
+      }
+
+      final response = await client.auth(accessToken).body({
+        "title": event.title,
+      }).post("album");
 
       if (response is! SuccessResponse) {
         return;

@@ -8,7 +8,7 @@ import 'package:codux/codux.dart';
 class PrecacheAddedPhotoEffect extends Effect {
   PrecacheAddedPhotoEffect() {
     on<PhotoAdded>((event) async {
-      final service = Dependency.inject<PrecacheService>();
+      final service = Dependency.find<PrecacheService>();
 
       final uri = await service.fromNetwork(event.model.publicImageUri);
 

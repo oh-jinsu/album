@@ -5,6 +5,15 @@ import 'package:flutter/foundation.dart';
 class Debug {
   Debug._();
 
+  static String tide(String text) {
+    return text
+        .replaceAll("{", "{\n")
+        .replaceAll("}", "\n}")
+        .replaceAll(",", ",\n")
+        .replaceAll("[", "[\n")
+        .replaceAll("]", "\n]");
+  }
+
   static void log(Object object) {
     if (kDebugMode) {
       final now = DateTime.now();
@@ -17,7 +26,8 @@ class Debug {
 
       final millisecond = now.millisecond.toString().padLeft(3, "0");
 
-      developer.log("[$hour:$minute:$second:$millisecond] $object");
+      developer.log(
+          "[$hour:$minute:$second:$millisecond] ${tide(object.toString())}");
     }
   }
 }

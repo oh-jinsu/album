@@ -10,9 +10,9 @@ import 'package:codux/codux.dart';
 class AutoSignInEffect extends Effect {
   AutoSignInEffect() {
     on<AppReady>((event) async {
-      final authRepository = Dependency.inject<AuthRepository>();
+      final authRepository = Dependency.find<AuthRepository>();
 
-      final clientService = Dependency.inject<ClientService>();
+      final client = Dependency.find<Client>();
 
       final refreshToken = await authRepository.findRefreshToken();
 
@@ -20,9 +20,9 @@ class AutoSignInEffect extends Effect {
         return dispatch(const GuestSignInRequested());
       }
 
-      final response = await clientService.post("auth/refresh", body: {
+      final response = await client.body({
         "refresh_token": refreshToken,
-      });
+      }).post("auth/refresh");
 
       if (response is! SuccessResponse) {
         return dispatch(const GuestSignInRequested());

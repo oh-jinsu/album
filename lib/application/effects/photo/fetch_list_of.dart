@@ -10,16 +10,18 @@ import 'package:codux/codux.dart';
 class FetchListOfPhotoEffect extends Effect {
   FetchListOfPhotoEffect() {
     on<AlbumOpened>((event) async {
-      final authRepository = Dependency.inject<AuthRepository>();
+      final authRepository = Dependency.find<AuthRepository>();
 
-      final clientService = Dependency.inject<ClientService>();
+      final client = Dependency.find<Client>();
 
       final accessToken = await authRepository.findAccessToken();
 
+      if (accessToken == null) {
+        return;
+      }
+
       final response =
-          await clientService.get("photo?album_id=${event.id}", headers: {
-        "Authorization": "Bearer $accessToken",
-      });
+          await client.auth(accessToken).get("photo?album_id=${event.id}");
 
       if (response is! SuccessResponse) {
         return;

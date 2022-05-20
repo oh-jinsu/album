@@ -9,7 +9,7 @@ import 'package:codux/codux.dart';
 class PrecacheFoundAlbumListEffect extends Effect {
   PrecacheFoundAlbumListEffect() {
     on<ListOfAlbumFound>((event) async {
-      final service = Dependency.inject<PrecacheService>();
+      final service = Dependency.find<PrecacheService>();
 
       final items = await Future.wait(
         event.model.items.map(

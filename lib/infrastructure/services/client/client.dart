@@ -1,107 +1,76 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:album/infrastructure/services/client/response.dart';
-import 'package:album/utilities/debug.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
-typedef Fetcher = Future<http.Response> Function(
-  Uri uri, {
-  Map<String, String>? headers,
-});
+import 'package:album/infrastructure/services/client/response.dart';
+import 'package:album/utilities/debug.dart';
 
-class ClientService {
-  Future<Response> get(
-    String endpoint, {
-    Map<String, String> headers = const {},
-  }) async {
-    Debug.log("GET $endpoint");
+typedef _Fetcher = Future<http.Response> Function(
+  Uri uri,
+  Map<String, String> headers,
+);
 
-    return _fetch(endpoint, http.get, headers: headers);
+class Client {
+  final String _host;
+
+  File? _file;
+
+  Map<String, dynamic>? _body;
+
+  final Map<String, String> _headers = {};
+
+  Client(String host) : _host = host;
+
+  Future<Response> get(String endpoint) => _request("GET", endpoint);
+
+  Future<Response> post(String endpoint) => _request("POST", endpoint);
+
+  Future<Response> put(String endpoint) => _request("PUT", endpoint);
+
+  Future<Response> patch(String endpoint) => _request("PATCH", endpoint);
+
+  Future<Response> update(String endpoint) => _request("UPDATE", endpoint);
+
+  Client header(String key, String value) {
+    _headers[key] = value;
+
+    return this;
   }
 
-  Future<Response> post(
-    String endpoint, {
-    Map<String, String> headers = const {},
-    Object body = const {},
-  }) async {
-    Debug.log("POST $endpoint");
+  Client auth(String token) {
+    _headers["Authorization"] = "Bearer $token";
 
-    final postHeaders = <String, String>{};
-
-    postHeaders.addAll(headers);
-
-    postHeaders["Content-Type"] = "application/json;charset=utf-8";
-
-    Debug.log(jsonEncode(body));
-
-    return _fetch(
-      endpoint,
-      (Uri uri, {Map<String, String>? headers}) => http.post(
-        uri,
-        headers: headers,
-        body: jsonEncode(body),
-      ),
-      headers: postHeaders,
-    );
+    return this;
   }
 
-  Future<Response> postMultipart(
-    String endpoint,
-    File file, {
-    Map<String, String> headers = const {},
-  }) async {
-    final request = http.MultipartRequest("POST", _getUri(endpoint));
+  Client body(Map<String, dynamic> body) {
+    _body = body;
 
-    request.headers.addAll(headers);
-
-    final mutlipartFile = await http.MultipartFile.fromPath("file", file.path);
-
-    request.files.add(mutlipartFile);
-
-    try {
-      final streamedResponse = await request.send();
-
-      final response = await http.Response.fromStream(streamedResponse);
-
-      return _parseResponse(response);
-    } catch (e) {
-      Debug.log(e);
-
-      await Future.delayed(const Duration(milliseconds: 1000));
-
-      return postMultipart(endpoint, file);
-    }
+    return this;
   }
 
-  Uri _getUri(String endpoint) =>
-      Uri.parse("${dotenv.get("API_HOST")}/$endpoint");
+  Client file(File file) {
+    _file = file;
 
-  Future<Response> _fetch(
-    String endpoint,
-    Fetcher fetcher, {
-    required Map<String, String> headers,
-  }) async {
-    try {
-      Debug.log(headers);
-
-      final response = await fetcher(_getUri(endpoint), headers: headers);
-
-      return _parseResponse(response);
-    } catch (e) {
-      Debug.log(e);
-
-      await Future.delayed(const Duration(milliseconds: 1000));
-
-      return _fetch(endpoint, fetcher, headers: headers);
-    }
+    return this;
   }
 
-  Response _parseResponse(http.Response response) {
-    Debug.log(response.statusCode);
+  Future<Response> _request(String method, String endpoint) async {
+    final uri = Uri.parse("$_host/$endpoint");
 
-    Debug.log(response.body);
+    Debug.log("""
+Requested $uri ($method)
+headers: $_headers
+payload: $_body
+""");
+
+    final response = await _load(_file, _body)(method)(uri, _headers);
+
+    Debug.log("""
+Reponsed status ${response.statusCode} from: $uri ($method)
+body: ${response.body}
+""");
 
     if (response.statusCode == 204) {
       return const SuccessResponse(body: null);
@@ -118,5 +87,55 @@ class ClientService {
     final message = body["message"];
 
     return FailureResponse(code: code, message: message);
+  }
+
+  static _Fetcher Function(String method) _load(
+      File? file, Map<String, dynamic>? body) {
+    if (file != null) {
+      return _requestWithFile(file);
+    } else {
+      return _requestWithPayloadIfExists(body);
+    }
+  }
+
+  static _Fetcher Function(String method) _requestWithPayloadIfExists(
+    Map<String, dynamic>? body,
+  ) {
+    return (method) {
+      return (uri, headers) async {
+        final request = http.Request(method, uri);
+
+        request.headers.addAll(headers);
+
+        if (body != null) {
+          request.headers["Content-Type"] = "application/json;charset=utf-8";
+
+          request.body = jsonEncode(body);
+        }
+
+        final streamedResponse = await request.send();
+
+        return http.Response.fromStream(streamedResponse);
+      };
+    };
+  }
+
+  static _Fetcher Function(String method) _requestWithFile(File file) {
+    return (method) {
+      return (uri, headers) async {
+        final request = http.MultipartRequest(method, uri);
+
+        request.headers.addAll(headers);
+
+        final mutlipartFile =
+            await http.MultipartFile.fromPath("file", file.path);
+
+        request.files.add(mutlipartFile);
+
+        final streamedResponse = await request.send();
+
+        return http.Response.fromStream(streamedResponse);
+      };
+    };
   }
 }

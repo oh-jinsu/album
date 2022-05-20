@@ -13,9 +13,9 @@ import "package:codux/codux.dart";
 class FetchUserAfterSignInEffect extends Effect {
   FetchUserAfterSignInEffect() {
     on<SignedIn>((event) async {
-      final authRepository = Dependency.inject<AuthRepository>();
-      final clientService = Dependency.inject<ClientService>();
-      final jwtService = Dependency.inject<JwtService>();
+      final authRepository = Dependency.find<AuthRepository>();
+      final client = Dependency.find<Client>();
+      final jwtService = Dependency.find<JwtService>();
 
       final accessToken = await authRepository.findAccessToken();
 
@@ -26,9 +26,7 @@ class FetchUserAfterSignInEffect extends Effect {
       final claim = await jwtService.extract(accessToken);
 
       if (claim["grd"] == "member") {
-        final response = await clientService.get("user/me", headers: {
-          "Authorization": "Bearer $accessToken",
-        });
+        final response = await client.auth(accessToken).get("user/me");
 
         if (response is! SuccessResponse) {
           return;
@@ -42,14 +40,16 @@ class FetchUserAfterSignInEffect extends Effect {
       dispatch(const UserPrefetched());
     });
     on<SignedInWithGuest>((event) async {
-      final authRepository = Dependency.inject<AuthRepository>();
-      final clientService = Dependency.inject<ClientService>();
+      final authRepository = Dependency.find<AuthRepository>();
+      final client = Dependency.find<Client>();
 
       final accessToken = await authRepository.findAccessToken();
 
-      final response = await clientService.post("user/guest", headers: {
-        "Authorization": "Bearer $accessToken",
-      });
+      if (accessToken == null) {
+        return;
+      }
+
+      final response = await client.auth(accessToken).post("user/guest");
 
       if (response is! SuccessResponse) {
         return;

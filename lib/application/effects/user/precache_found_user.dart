@@ -9,7 +9,7 @@ import 'package:codux/codux.dart';
 class PrecacheFoundUserEffect extends Effect {
   PrecacheFoundUserEffect() {
     on<UserFound>((event) async {
-      final service = Dependency.inject<PrecacheService>();
+      final service = Dependency.find<PrecacheService>();
 
       final result = await () async {
         final uri = event.model.avatarImageUri;

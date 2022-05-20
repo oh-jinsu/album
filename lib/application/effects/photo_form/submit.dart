@@ -12,21 +12,20 @@ import 'package:codux/codux.dart';
 class SubmitPhotoFormEffect extends Effect {
   SubmitPhotoFormEffect() {
     on<PhotoFormSubmitted>((event) async {
-      final authRepository = Dependency.inject<AuthRepository>();
+      final authRepository = Dependency.find<AuthRepository>();
 
-      final clientService = Dependency.inject<ClientService>();
+      final client = Dependency.find<Client>();
 
       dispatch(const PhotoFormPending());
 
       final accessToken = await authRepository.findAccessToken();
 
-      final imageRes = await clientService.postMultipart(
-        "util/image",
-        event.file,
-        headers: {
-          "Authorization": "Bearer $accessToken",
-        },
-      );
+      if (accessToken == null) {
+        return;
+      }
+
+      final imageRes =
+          await client.auth(accessToken).file(event.file).post("util/image");
 
       if (imageRes is! SuccessResponse) {
         return;
@@ -34,14 +33,12 @@ class SubmitPhotoFormEffect extends Effect {
 
       final imageId = imageRes.body["id"];
 
-      final response = await clientService.post("photo", headers: {
-        "Authorization": "Bearer $accessToken",
-      }, body: {
+      final response = await client.auth(accessToken).body({
         "album_id": event.albumId,
         "image": imageId,
         "date": event.date.toIso8601String(),
         "description": event.description,
-      });
+      }).post("photo");
 
       if (response is! SuccessResponse) {
         return;

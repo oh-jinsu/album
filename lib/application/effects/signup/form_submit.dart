@@ -12,23 +12,21 @@ import 'package:codux/codux.dart';
 class SubmitSignUpFormEffect extends Effect {
   SubmitSignUpFormEffect() {
     on<SignUpFormSubmitted>((event) async {
-      final authRepository = Dependency.inject<AuthRepository>();
+      final authRepository = Dependency.find<AuthRepository>();
 
-      final clientService = Dependency.inject<ClientService>();
+      final client = Dependency.find<Client>();
 
       dispatch(const SignUpFormPending());
 
       final guestAccessToken = await authRepository.findAccessToken();
 
-      final authRes = await clientService.post(
-        "auth/signup?provider=${event.provider}",
-        headers: {
-          "Authorization": "Bearer $guestAccessToken",
-        },
-        body: {
-          "id_token": event.idToken,
-        },
-      );
+      if (guestAccessToken == null) {
+        return;
+      }
+
+      final authRes = await client.auth(guestAccessToken).body({
+        "id_token": event.idToken,
+      }).post("auth/signup?provider=${event.provider}");
 
       if (authRes is! SuccessResponse) {
         return;
@@ -44,17 +42,11 @@ class SubmitSignUpFormEffect extends Effect {
 
       final avatar = await _getAvatarIdIfExists(accessToken, event.avatar);
 
-      final userRes = await clientService.post(
-        "user/me",
-        headers: {
-          "Authorization": "Bearer $accessToken",
-        },
-        body: {
-          "avatar": avatar,
-          "name": event.name,
-          "email": event.email.isEmpty ? null : event.email,
-        },
-      );
+      final userRes = await client.auth(accessToken).body({
+        "avatar": avatar,
+        "name": event.name,
+        "email": event.email.isEmpty ? null : event.email,
+      }).post("user/me");
 
       if (userRes is! SuccessResponse) {
         return;
@@ -72,15 +64,10 @@ class SubmitSignUpFormEffect extends Effect {
       return null;
     }
 
-    final clientService = Dependency.inject<ClientService>();
+    final client = Dependency.find<Client>();
 
-    final response = await clientService.postMultipart(
-      "util/image",
-      avatar,
-      headers: {
-        "Authorization": "Bearer $accessToken",
-      },
-    );
+    final response =
+        await client.auth(accessToken).file(avatar).post("util/image");
 
     if (response is! SuccessResponse) {
       return null;

@@ -9,7 +9,7 @@ import "package:codux/codux.dart";
 class PrecacheAddedAlbumEffect extends Effect {
   PrecacheAddedAlbumEffect() {
     on<AlbumAdded>((event) async {
-      final precacheService = Dependency.inject<PrecacheService>();
+      final precacheService = Dependency.find<PrecacheService>();
 
       final friends = await Future.wait(event.model.friends.map(
         (friend) async {

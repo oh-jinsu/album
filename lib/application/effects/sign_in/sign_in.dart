@@ -11,15 +11,13 @@ class SignInEffect extends Effect {
   SignInEffect() {
     on<ThirdPartyAccountFound>(
       (event) async {
-        final authRepository = Dependency.inject<AuthRepository>();
+        final authRepository = Dependency.find<AuthRepository>();
 
-        final clientService = Dependency.inject<ClientService>();
+        final client = Dependency.find<Client>();
 
-        final uri = "auth/signin?provider=${event.provider}";
-
-        final response = await clientService.post(uri, body: {
+        final response = await client.body({
           "id_token": event.idToken,
-        });
+        }).post("auth/signin?provider=${event.provider}");
 
         if (response is FailureResponse) {
           if (response.code == 2) {

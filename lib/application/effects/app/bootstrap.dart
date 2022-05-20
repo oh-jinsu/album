@@ -30,15 +30,15 @@ class BootstrapEffect extends Effect {
       dispatch(const InfraLoaded());
     });
     on<InfraLoaded>((event) {
-      Dependency.assign<AuthRepository>(AuthRepository());
-      Dependency.assign<ImageRepository>(ImageRepository());
+      Dependency.single<AuthRepository>(AuthRepository());
+      Dependency.single<ImageRepository>(ImageRepository());
 
       dispatch(const RepositoryLoaded());
     });
     on<RepositoryLoaded>((event) {
-      Dependency.assign<ClientService>(ClientService());
-      Dependency.assign<PrecacheService>(PrecacheService());
-      Dependency.assign<JwtService>(JwtService());
+      Dependency.factory<Client>(() => Client(dotenv.get("API_HOST")));
+      Dependency.single<PrecacheService>(PrecacheService());
+      Dependency.single<JwtService>(JwtService());
 
       dispatch(const ServiceLoaded());
     });
