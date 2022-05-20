@@ -1,5 +1,5 @@
-import 'package:album/application/events/signin/auto_sign_in_succeed.dart';
-import 'package:album/application/events/signin/guest_sign_in_succeed.dart';
+import 'package:album/application/events/auth/signed_in.dart';
+import 'package:album/application/events/signin/signed_in_with_guest.dart';
 import 'package:album/application/events/user/found.dart';
 import 'package:album/application/events/user/prefetched.dart';
 import 'package:album/application/models/user/user.dart';
@@ -10,9 +10,9 @@ import 'package:album/infrastructure/services/jwt/jwt.dart';
 import 'package:album/utilities/dependency.dart';
 import "package:codux/codux.dart";
 
-class PrefetchUserEffect extends Effect {
-  PrefetchUserEffect() {
-    on<AutoSignInSucceed>((event) async {
+class FetchUserAfterSignInEffect extends Effect {
+  FetchUserAfterSignInEffect() {
+    on<SignedIn>((event) async {
       final authRepository = Dependency.inject<AuthRepository>();
       final clientService = Dependency.inject<ClientService>();
       final jwtService = Dependency.inject<JwtService>();
@@ -41,7 +41,7 @@ class PrefetchUserEffect extends Effect {
 
       dispatch(const UserPrefetched());
     });
-    on<GuestSignInSucceed>((event) async {
+    on<SignedInWithGuest>((event) async {
       final authRepository = Dependency.inject<AuthRepository>();
       final clientService = Dependency.inject<ClientService>();
 

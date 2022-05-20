@@ -1,6 +1,10 @@
+import 'package:album/application/effects/app/sign_out.dart';
+import 'package:album/application/events/auth/sign_out_requested.dart';
 import 'package:album/application/events/navigation/pushed.dart';
+import 'package:album/application/models/auth/sign_out_form.dart';
 import 'package:album/application/models/common/option.dart';
 import 'package:album/application/models/user/user.dart';
+import 'package:album/application/stores/sign_out_form.dart';
 import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/common/components/bottom_navigation.dart';
 import 'package:album/presentation/profile/widgets/avatar.dart';
@@ -10,6 +14,15 @@ import 'package:flutter/cupertino.dart';
 
 class ProfilePage extends Component {
   const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  void onCreated(BuildContext context) {
+    useStore(() => SignOutFormStore());
+
+    useEffect(() => SignOutEffect());
+
+    super.onCreated(context);
+  }
 
   @override
   Widget render(BuildContext context) {
@@ -128,15 +141,39 @@ class ProfilePage extends Component {
                             CupertinoFormSection(
                               header: const Text("기타"),
                               children: [
-                                ProfileMenu(
-                                  onTap: () {},
-                                  prefix: const Text(
-                                    "로그아웃",
-                                    style: TextStyle(
-                                      color: CupertinoColors.destructiveRed,
-                                    ),
-                                  ),
-                                ),
+                                StreamBuilder(
+                                  stream: find<SignOutFormStore>().stream,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      final data =
+                                          snapshot.data as SignOutFormModel;
+
+                                      return ProfileMenu(
+                                        onTap: () {
+                                          if (data.isPending) {
+                                            return;
+                                          }
+
+                                          dispatch(const SignOutRequested());
+                                        },
+                                        prefix: Text(
+                                          "로그아웃",
+                                          style: TextStyle(
+                                            color: data.isPending
+                                                ? CupertinoColors.inactiveGray
+                                                : CupertinoColors
+                                                    .destructiveRed,
+                                          ),
+                                        ),
+                                        child: data.isPending
+                                            ? const CupertinoActivityIndicator()
+                                            : null,
+                                      );
+                                    }
+
+                                    return Container();
+                                  },
+                                )
                               ],
                             ),
                         ],

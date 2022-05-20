@@ -1,5 +1,5 @@
-import 'package:album/application/events/signin/auto_sign_in_failed.dart';
-import 'package:album/application/events/signin/guest_sign_in_succeed.dart';
+import 'package:album/application/events/signin/guest_sign_in_requested.dart';
+import 'package:album/application/events/signin/signed_in_with_guest.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
 import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
@@ -8,7 +8,7 @@ import 'package:codux/codux.dart';
 
 class GuestSignInEffect extends Effect {
   GuestSignInEffect() {
-    on<AutoSignInFailed>((event) async {
+    on<GuestSignInRequested>((event) async {
       final authRepository = Dependency.inject<AuthRepository>();
       final clientService = Dependency.inject<ClientService>();
 
@@ -24,7 +24,7 @@ class GuestSignInEffect extends Effect {
       await authRepository.saveAccessToken(accessToken);
       await authRepository.saveRefreshToken(refreshToken);
 
-      dispatch(const GuestSignInSucceed());
+      dispatch(const SignedInWithGuest());
     });
   }
 }

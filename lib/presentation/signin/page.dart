@@ -1,4 +1,3 @@
-import 'package:album/application/effects/sign_in/fetch_user.dart';
 import 'package:album/application/effects/sign_in/sign_in.dart';
 import 'package:album/application/effects/sign_in/sign_in_with_apple.dart';
 import 'package:album/application/effects/sign_in/sign_in_with_google.dart';
@@ -24,7 +23,6 @@ class SignInPage extends Component {
     useEffect(() => SignInEffect());
     useEffect(() => SignInWithAppleEffect());
     useEffect(() => SignInWithGoogleEffect());
-    useEffect(() => FetchUserEffect());
 
     super.onCreated(context);
   }
