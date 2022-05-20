@@ -10,6 +10,7 @@ import 'package:album/infrastructure/repositories/image.dart';
 import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/jwt/jwt.dart';
 import 'package:album/infrastructure/services/precache/precache.dart';
+import 'package:album/infrastructure/services/share/share.dart';
 import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -39,6 +40,7 @@ class BootstrapEffect extends Effect {
       Dependency.factory<Client>(() => Client(dotenv.get("API_HOST")));
       Dependency.single<PrecacheService>(PrecacheService());
       Dependency.single<JwtService>(JwtService());
+      Dependency.single<ShareService>(ShareService());
 
       dispatch(const ServiceLoaded());
     });

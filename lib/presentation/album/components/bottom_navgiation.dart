@@ -1,7 +1,9 @@
+import 'package:album/presentation/album/components/friend_list.dart';
 import 'package:album/presentation/common/widgets/button.dart';
 import 'package:album/presentation/photo_form/modal.dart';
 import "package:codux/codux.dart";
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class AlbumBottomNavigationComponent extends Component {
@@ -26,7 +28,14 @@ class AlbumBottomNavigationComponent extends Component {
               child: const Icon(
                 CupertinoIcons.person_2,
               ),
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => FriendListModal(
+                    albumId: id,
+                  ),
+                );
+              },
             ),
             Button(
               child: const Icon(

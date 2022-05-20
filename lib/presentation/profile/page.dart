@@ -7,7 +7,7 @@ import 'package:album/application/models/user/user.dart';
 import 'package:album/application/stores/sign_out_form.dart';
 import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/common/components/bottom_navigation.dart';
-import 'package:album/presentation/profile/widgets/avatar.dart';
+import 'package:album/presentation/common/widgets/avatar.dart';
 import 'package:album/presentation/profile/widgets/menu.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,8 +44,9 @@ class ProfilePage extends Component {
                           const SizedBox(height: 16.0),
                           if (data is Some<UserModel>) ...[
                             const SizedBox(height: 24.0),
-                            ProfileAvatar(
+                            Avatar(
                               imageUri: data.value.avatarImageUri,
+                              radius: 92.0,
                             ),
                             const SizedBox(height: 12.0),
                             Text(

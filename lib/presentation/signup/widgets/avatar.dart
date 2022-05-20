@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:album/presentation/common/widgets/avatar_background.dart';
 import 'package:flutter/cupertino.dart';
 
 class SignUpAvatar extends StatelessWidget {
@@ -19,19 +20,12 @@ class SignUpAvatar extends StatelessWidget {
         onTap: onTap,
         child: ClipOval(
             child: SizedBox(
-          width: 100.0,
-          height: 100.0,
+          width: 92.0,
+          height: 92.0,
           child: Stack(children: [
             Positioned.fill(
               child: image == null
-                  ? Container(
-                      color: CupertinoColors.systemGrey5,
-                      child: const Icon(
-                        CupertinoIcons.person_fill,
-                        color: CupertinoColors.systemGrey2,
-                        size: 50.0,
-                      ),
-                    )
+                  ? const AvatarBackground(radius: 92.0)
                   : Image(
                       fit: BoxFit.cover,
                       image: FileImage(image!),
@@ -42,13 +36,13 @@ class SignUpAvatar extends StatelessWidget {
               left: 0.0,
               right: 0.0,
               child: Container(
-                height: 20.0,
+                height: 18.0,
                 color: CupertinoColors.black,
                 child: const Center(
                   child: Text(
                     "편집",
                     style: TextStyle(
-                      fontSize: 12.0,
+                      fontSize: 11.0,
                       color: CupertinoColors.white,
                       fontWeight: FontWeight.w200,
                     ),

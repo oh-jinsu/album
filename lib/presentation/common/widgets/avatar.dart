@@ -1,11 +1,14 @@
+import 'package:album/presentation/common/widgets/avatar_background.dart';
 import 'package:flutter/cupertino.dart';
 
-class ProfileAvatar extends StatelessWidget {
+class Avatar extends StatelessWidget {
   final String? imageUri;
+  final double radius;
 
-  const ProfileAvatar({
+  const Avatar({
     Key? key,
     required this.imageUri,
+    required this.radius,
   }) : super(key: key);
 
   @override
@@ -13,18 +16,11 @@ class ProfileAvatar extends StatelessWidget {
     return Center(
       child: ClipOval(
         child: SizedBox(
-          width: 92.0,
-          height: 92.0,
           child: imageUri == null
-              ? Container(
-                  color: CupertinoColors.systemGrey5,
-                  child: const Icon(
-                    CupertinoIcons.person_fill,
-                    color: CupertinoColors.systemGrey2,
-                    size: 50.0,
-                  ),
-                )
+              ? AvatarBackground(radius: radius)
               : Image(
+                  width: radius,
+                  height: radius,
                   fit: BoxFit.cover,
                   image: NetworkImage(imageUri!),
                 ),
