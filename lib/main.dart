@@ -13,6 +13,7 @@ import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/album/page.dart';
 import 'package:album/presentation/home/page.dart';
 import 'package:album/presentation/profile/page.dart';
+import 'package:album/presentation/signin/page.dart';
 import 'package:album/presentation/splash/page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:codux/codux.dart';
@@ -81,6 +82,13 @@ class App extends Component {
             transitionDuration: Duration.zero,
             pageBuilder: (context, animation, secondAnimation) =>
                 const ProfilePage(),
+          );
+        }
+
+        if (settings.name == "/signin") {
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const SignInPage(),
           );
         }
 
