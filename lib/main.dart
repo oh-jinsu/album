@@ -10,11 +10,10 @@ import 'package:album/application/effects/app/prefetch_user.dart';
 import 'package:album/application/events/app/started.dart';
 import 'package:album/application/stores/list_of_album.dart';
 import 'package:album/application/stores/user.dart';
-import 'package:album/presentation/pages/album.dart';
-import 'package:album/presentation/pages/home.dart';
-import 'package:album/presentation/pages/invitation.dart';
-import 'package:album/presentation/pages/profile.dart';
-import 'package:album/presentation/pages/splash.dart';
+import 'package:album/presentation/album/page.dart';
+import 'package:album/presentation/home/page.dart';
+import 'package:album/presentation/profile/page.dart';
+import 'package:album/presentation/splash/page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -57,13 +56,6 @@ class App extends Component {
           return CupertinoPageRoute(
             settings: settings,
             builder: (context) => const SplashPage(),
-          );
-        }
-
-        if (settings.name == "/invitation") {
-          return CupertinoPageRoute(
-            settings: settings,
-            builder: (context) => const InvitationPage(),
           );
         }
 

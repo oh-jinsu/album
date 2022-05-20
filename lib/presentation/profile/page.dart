@@ -2,9 +2,9 @@ import 'package:album/application/events/navigation/pushed.dart';
 import 'package:album/application/models/common/option.dart';
 import 'package:album/application/models/user/user.dart';
 import 'package:album/application/stores/user.dart';
-import 'package:album/presentation/components/common/bottom_navigation.dart';
-import 'package:album/presentation/components/profile/widgets/avatar.dart';
-import 'package:album/presentation/components/profile/widgets/menu.dart';
+import 'package:album/presentation/common/components/bottom_navigation.dart';
+import 'package:album/presentation/profile/widgets/avatar.dart';
+import 'package:album/presentation/profile/widgets/menu.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 

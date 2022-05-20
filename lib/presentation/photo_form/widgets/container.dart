@@ -1,7 +1,7 @@
-import 'package:album/presentation/components/common/widgets/button.dart';
-import 'package:album/presentation/components/photo_form/widgets/bottom_inset.dart';
-import 'package:album/presentation/components/photo_form/widgets/drawer.dart';
-import 'package:album/presentation/components/photo_form/widgets/label.dart';
+import 'package:album/presentation/common/widgets/button.dart';
+import 'package:album/presentation/photo_form/widgets/bottom_inset.dart';
+import 'package:album/presentation/photo_form/widgets/drawer.dart';
+import 'package:album/presentation/photo_form/widgets/label.dart';
 import 'package:flutter/material.dart';
 
 class PhotoEditorContainer extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:album/application/events/album/opened.dart';
 import 'package:album/application/models/photo/list_of_photo.dart';
 import 'package:album/application/models/photo/precache_list_of_photo.dart';
 import 'package:album/application/stores/list_of_photo.dart';
-import 'package:album/presentation/components/album/widgets/list.dart';
+import 'package:album/presentation/album/widgets/list.dart';
 import "package:codux/codux.dart";
 import 'package:flutter/cupertino.dart';
 

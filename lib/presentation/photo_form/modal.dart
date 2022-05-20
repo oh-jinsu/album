@@ -8,9 +8,9 @@ import 'package:album/application/events/photo/submitted.dart';
 import 'package:album/application/models/common/state.dart';
 import 'package:album/application/models/photo/form.dart';
 import 'package:album/application/stores/photo_form.dart';
-import 'package:album/presentation/components/photo_form/widgets/container.dart';
-import 'package:album/presentation/components/photo_form/widgets/date_picker.dart';
-import 'package:album/presentation/components/photo_form/widgets/submit_button.dart';
+import 'package:album/presentation/photo_form/widgets/container.dart';
+import 'package:album/presentation/photo_form/widgets/date_picker.dart';
+import 'package:album/presentation/photo_form/widgets/submit_button.dart';
 import "package:codux/codux.dart";
 import 'package:flutter/cupertino.dart';
 

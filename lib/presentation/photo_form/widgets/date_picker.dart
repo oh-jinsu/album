@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:album/presentation/components/photo_form/widgets/picker_for_ios.dart';
+import 'package:album/presentation/photo_form/widgets/picker_for_ios.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

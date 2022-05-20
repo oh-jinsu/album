@@ -1,5 +1,5 @@
 import 'package:album/application/models/photo/photo.dart';
-import 'package:album/presentation/components/album/widgets/floor.dart';
+import 'package:album/presentation/album/widgets/floor.dart';
 import 'package:flutter/cupertino.dart';
 
 class PhotoStackWidget extends StatefulWidget {

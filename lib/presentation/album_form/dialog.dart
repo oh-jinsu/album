@@ -8,8 +8,8 @@ import 'package:album/application/stores/album_form.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 
-class AddAlbumDialog extends Component {
-  const AddAlbumDialog({Key? key}) : super(key: key);
+class AlbumFormDialog extends Component {
+  const AlbumFormDialog({Key? key}) : super(key: key);
 
   @override
   void onCreated(BuildContext context) {

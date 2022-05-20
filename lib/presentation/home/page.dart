@@ -1,7 +1,7 @@
 import 'package:album/application/effects/album/precache_added.dart';
-import 'package:album/presentation/components/common/bottom_navigation.dart';
-import 'package:album/presentation/components/home/album_list.dart';
-import 'package:album/presentation/components/home/app_bar.dart';
+import 'package:album/presentation/common/components/bottom_navigation.dart';
+import 'package:album/presentation/home/components/album_list.dart';
+import 'package:album/presentation/home/components/app_bar.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 

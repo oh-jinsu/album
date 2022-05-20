@@ -1,5 +1,5 @@
-import 'package:album/presentation/components/common/widgets/button.dart';
-import 'package:album/presentation/modals/photo_form.dart';
+import 'package:album/presentation/common/widgets/button.dart';
+import 'package:album/presentation/photo_form/modal.dart';
 import "package:codux/codux.dart";
 import 'package:flutter/cupertino.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';

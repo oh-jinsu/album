@@ -1,4 +1,4 @@
-import 'package:album/presentation/components/common/widgets/button.dart';
+import 'package:album/presentation/common/widgets/button.dart';
 import 'package:flutter/cupertino.dart';
 
 class PickerForIos extends StatefulWidget {
