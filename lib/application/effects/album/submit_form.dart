@@ -1,32 +1,22 @@
+import 'package:album/application/effects/common/auth.dart';
 import 'package:album/application/events/album/added.dart';
 import 'package:album/application/events/album/form_pending.dart';
 import 'package:album/application/events/album/form_submitted.dart';
 import 'package:album/application/events/navigation/popped.dart';
 import 'package:album/application/models/album/album.dart';
-import 'package:album/infrastructure/repositories/auth.dart';
-import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
-import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 
-class SubmitAlbumFormEffect extends Effect {
+class SubmitAlbumFormEffect extends Effect with AuthEffectMixin {
   SubmitAlbumFormEffect() {
     on<AlbumFormSumitted>((event) async {
-      final authRepoisotry = Dependency.find<AuthRepository>();
-
-      final client = Dependency.find<Client>();
-
       dispatch(const AlbumFormPending());
 
-      final accessToken = await authRepoisotry.findAccessToken();
-
-      if (accessToken == null) {
-        return;
-      }
-
-      final response = await client.auth(accessToken).body({
-        "title": event.title,
-      }).post("album");
+      final response = await withAuth(
+        (client) => client.body({
+          "title": event.title,
+        }).post("album"),
+      );
 
       if (response is! SuccessResponse) {
         return;

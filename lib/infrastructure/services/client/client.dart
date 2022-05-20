@@ -30,7 +30,7 @@ class Client {
 
   Future<Response> patch(String endpoint) => _request("PATCH", endpoint);
 
-  Future<Response> update(String endpoint) => _request("UPDATE", endpoint);
+  Future<Response> delete(String endpoint) => _request("DELETE", endpoint);
 
   Client header(String key, String value) {
     _headers[key] = value;
