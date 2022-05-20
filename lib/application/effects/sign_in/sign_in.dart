@@ -25,7 +25,7 @@ class SignInEffect extends Effect {
           if (response.code == 2) {
             dispatch(Replaced("/signup", arguments: {
               "provider": event.provider,
-              "idToken": event.idToken,
+              "id_token": event.idToken,
               "name": event.name,
               "email": event.email,
             }));

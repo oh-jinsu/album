@@ -1,7 +1,8 @@
-import 'package:album/application/effects/auth/fetch_user.dart';
-import 'package:album/application/effects/auth/sign_in.dart';
-import 'package:album/application/effects/auth/sign_in_with_apple.dart';
-import 'package:album/application/effects/auth/sign_in_with_google.dart';
+import 'package:album/application/effects/sign_in/fetch_user.dart';
+import 'package:album/application/effects/sign_in/sign_in.dart';
+import 'package:album/application/effects/sign_in/sign_in_with_apple.dart';
+import 'package:album/application/effects/sign_in/sign_in_with_google.dart';
+import 'package:album/application/effects/sign_in/waiter.dart';
 import 'package:album/application/events/auth/apple_sign_in_requested.dart';
 import 'package:album/application/events/auth/google_sign_in_requested.dart';
 import 'package:album/application/models/auth/sign_in_form.dart';
@@ -19,6 +20,7 @@ class SignInPage extends Component {
   void onCreated(BuildContext context) {
     useStore(() => SignInFormStore());
 
+    useEffect(() => SignInPageWaiterEffect());
     useEffect(() => SignInEffect());
     useEffect(() => SignInWithAppleEffect());
     useEffect(() => SignInWithGoogleEffect());

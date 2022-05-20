@@ -1,5 +1,4 @@
 import 'package:album/application/events/auth/signed_in.dart';
-import 'package:album/application/events/navigation/popped.dart';
 import 'package:album/application/events/user/found.dart';
 import 'package:album/application/models/user/user.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
@@ -32,8 +31,6 @@ class FetchUserEffect extends Effect {
       final model = UserModel.fromJson(response.body);
 
       dispatch(UserFound(model));
-
-      dispatch(const Popped());
     });
   }
 }

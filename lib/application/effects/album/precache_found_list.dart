@@ -6,8 +6,8 @@ import 'package:album/infrastructure/services/precache/resolution.dart';
 import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 
-class PrecacheAlbumListEffect extends Effect {
-  PrecacheAlbumListEffect() {
+class PrecacheFoundAlbumListEffect extends Effect {
+  PrecacheFoundAlbumListEffect() {
     on<ListOfAlbumFound>((event) async {
       final service = Dependency.inject<PrecacheService>();
 
