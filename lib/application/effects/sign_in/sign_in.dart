@@ -1,23 +1,23 @@
+import 'package:album/application/effects/common/client.dart';
 import 'package:album/application/events/auth/signed_in.dart';
 import 'package:album/application/events/auth/third_party_account_found.dart';
 import 'package:album/application/events/navigation/replaced.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
-import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
 import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 
-class SignInEffect extends Effect {
+class SignInEffect extends Effect with ClientEffectMixin {
   SignInEffect() {
     on<ThirdPartyAccountFound>(
       (event) async {
         final authRepository = Dependency.find<AuthRepository>();
 
-        final client = Dependency.find<Client>();
-
-        final response = await client.body({
-          "id_token": event.idToken,
-        }).post("auth/signin?provider=${event.provider}");
+        final response = await useClient(
+          (client) => client.body({
+            "id_token": event.idToken,
+          }).post("auth/signin?provider=${event.provider}"),
+        );
 
         if (response is FailureResponse) {
           if (response.code == 2) {

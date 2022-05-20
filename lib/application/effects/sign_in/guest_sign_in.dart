@@ -1,18 +1,17 @@
+import 'package:album/application/effects/common/client.dart';
 import 'package:album/application/events/signin/guest_sign_in_requested.dart';
 import 'package:album/application/events/signin/signed_in_with_guest.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
-import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
 import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 
-class GuestSignInEffect extends Effect {
+class GuestSignInEffect extends Effect with ClientEffectMixin {
   GuestSignInEffect() {
     on<GuestSignInRequested>((event) async {
       final authRepository = Dependency.find<AuthRepository>();
-      final client = Dependency.find<Client>();
 
-      final response = await client.get("auth/guest");
+      final response = await useClient((client) => client.get("auth/guest"));
 
       if (response is! SuccessResponse) {
         return;

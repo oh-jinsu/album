@@ -7,9 +7,9 @@ import 'package:album/infrastructure/services/client/response.dart';
 import 'package:album/utilities/debug.dart';
 
 typedef _Fetcher = Future<http.Response> Function(
-  Uri uri,
-  Map<String, String> headers,
-);
+  Uri uri, {
+  Map<String, String>? headers,
+});
 
 class Client {
   final String _host;
@@ -65,7 +65,7 @@ headers: $_headers
 payload: $_body
 """);
 
-    final response = await _load(_file, _body)(method)(uri, _headers);
+    final response = await _load(_file, _body)(method)(uri, headers: _headers);
 
     Debug.log("""
 Reponsed status ${response.statusCode} from: $uri ($method)
@@ -102,30 +102,45 @@ body: ${response.body}
     Map<String, dynamic>? body,
   ) {
     return (method) {
-      return (uri, headers) async {
-        final request = http.Request(method, uri);
-
-        request.headers.addAll(headers);
-
-        if (body != null) {
-          request.headers["Content-Type"] = "application/json;charset=utf-8";
-
-          request.body = jsonEncode(body);
+      return (uri, {headers}) async {
+        if (method == "GET") {
+          return http.get(uri, headers: headers);
         }
 
-        final streamedResponse = await request.send();
+        final fetcher = () {
+          switch (method) {
+            case "PUT":
+              return http.put;
+            case "PATCH":
+              return http.patch;
+            case "DELETE":
+              return http.delete;
+            default:
+              return http.post;
+          }
+        }();
 
-        return http.Response.fromStream(streamedResponse);
+        headers ??= {};
+
+        headers["Content-Type"] = "application/json;charset=utf-8";
+
+        return fetcher(
+          uri,
+          headers: headers,
+          body: jsonEncode(body),
+        );
       };
     };
   }
 
   static _Fetcher Function(String method) _requestWithFile(File file) {
     return (method) {
-      return (uri, headers) async {
+      return (uri, {headers}) async {
         final request = http.MultipartRequest(method, uri);
 
-        request.headers.addAll(headers);
+        if (headers != null) {
+          request.headers.addAll(headers);
+        }
 
         final mutlipartFile =
             await http.MultipartFile.fromPath("file", file.path);
