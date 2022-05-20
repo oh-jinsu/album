@@ -9,9 +9,11 @@ import 'package:album/application/effects/app/prefetch_album_list.dart';
 import 'package:album/application/effects/app/prefetch_user.dart';
 import 'package:album/application/events/app/started.dart';
 import 'package:album/application/stores/list_of_album.dart';
+import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/pages/album.dart';
 import 'package:album/presentation/pages/home.dart';
 import 'package:album/presentation/pages/invitation.dart';
+import 'package:album/presentation/pages/profile.dart';
 import 'package:album/presentation/pages/splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:codux/codux.dart';
@@ -25,6 +27,7 @@ class App extends Component {
   @override
   void onCreated(BuildContext context) {
     useStore(() => ListOfAlbumStore());
+    useStore(() => UserStore());
 
     useEffect(() => NavigationEffect());
     useEffect(() => InvitationEffect());
@@ -65,9 +68,11 @@ class App extends Component {
         }
 
         if (settings.name == "/home") {
-          return CupertinoPageRoute(
+          return PageRouteBuilder(
             settings: settings,
-            builder: (context) => const HomePage(),
+            transitionDuration: Duration.zero,
+            pageBuilder: (context, animation, secondAnimation) =>
+                const HomePage(),
           );
         }
 
@@ -75,6 +80,15 @@ class App extends Component {
           return CupertinoPageRoute(
             settings: settings,
             builder: (context) => const AlbumPage(),
+          );
+        }
+
+        if (settings.name == "/profile") {
+          return PageRouteBuilder(
+            settings: settings,
+            transitionDuration: Duration.zero,
+            pageBuilder: (context, animation, secondAnimation) =>
+                const ProfilePage(),
           );
         }
 

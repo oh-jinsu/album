@@ -30,7 +30,7 @@ class HomePage extends Component {
               ],
             ),
           ),
-          BottomNavigationComponent(),
+          BottomNavigationComponent(currentIndex: 0),
         ],
       ),
     );

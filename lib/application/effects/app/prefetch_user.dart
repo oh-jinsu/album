@@ -6,6 +6,7 @@ import 'package:album/application/models/user/user.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
 import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
+import 'package:album/infrastructure/services/jwt/jwt.dart';
 import 'package:album/utilities/dependency.dart';
 import "package:codux/codux.dart";
 
@@ -14,20 +15,29 @@ class PrefetchUserEffect extends Effect {
     on<AutoSignInSucceed>((event) async {
       final authRepository = Dependency.inject<AuthRepository>();
       final clientService = Dependency.inject<ClientService>();
+      final jwtService = Dependency.inject<JwtService>();
 
       final accessToken = await authRepository.findAccessToken();
 
-      final response = await clientService.get("user/me", headers: {
-        "Authorization": "Bearer $accessToken",
-      });
-
-      if (response is! SuccessResponse) {
+      if (accessToken == null) {
         return;
       }
 
-      final model = UserModel.fromJson(response.body);
+      final claim = await jwtService.extract(accessToken);
 
-      dispatch(UserFound(model));
+      if (claim["grd"] == "member") {
+        final response = await clientService.get("user/me", headers: {
+          "Authorization": "Bearer $accessToken",
+        });
+
+        if (response is! SuccessResponse) {
+          return;
+        }
+
+        final model = UserModel.fromJson(response.body);
+
+        dispatch(UserFound(model));
+      }
 
       dispatch(const UserPrefetched());
     });
@@ -44,10 +54,6 @@ class PrefetchUserEffect extends Effect {
       if (response is! SuccessResponse) {
         return;
       }
-
-      final model = UserModel.fromJson(response.body);
-
-      dispatch(UserFound(model));
 
       dispatch(const UserPrefetched());
     });
