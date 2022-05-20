@@ -11,7 +11,8 @@ class Debug {
         .replaceAll("}", "\n}")
         .replaceAll(",", ",\n")
         .replaceAll("[", "[\n")
-        .replaceAll("]", "\n]");
+        .replaceAll("]", "\n]")
+        .replaceAll(RegExp(r'\n\n'), "");
   }
 
   static void log(Object object) {

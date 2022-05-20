@@ -1,4 +1,5 @@
 import 'package:album/application/effects/common/auth.dart';
+import 'package:album/application/events/app/failure_unexpected.dart';
 import 'package:album/application/events/auth/sign_out_form_pending.dart';
 import 'package:album/application/events/auth/sign_out_requested.dart';
 import 'package:album/application/events/auth/signed_out.dart';
@@ -18,7 +19,9 @@ class SignOutEffect extends Effect with AuthEffectMixin {
       final response = await withAuth((client) => client.post("auth/signout"));
 
       if (response is! SuccessResponse) {
-        return;
+        return dispatch(FailureUnexpected(
+          response is FailureResponse ? response.message : "예기치 못한 오류입니다.",
+        ));
       }
 
       await authRepository.deleteAccessToken();

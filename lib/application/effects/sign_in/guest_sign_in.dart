@@ -1,4 +1,5 @@
 import 'package:album/application/effects/common/client.dart';
+import 'package:album/application/events/app/failure_unexpected.dart';
 import 'package:album/application/events/signin/guest_sign_in_requested.dart';
 import 'package:album/application/events/signin/signed_in_with_guest.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
@@ -14,7 +15,7 @@ class GuestSignInEffect extends Effect with ClientEffectMixin {
       final response = await useClient((client) => client.get("auth/guest"));
 
       if (response is! SuccessResponse) {
-        return;
+        return dispatch(const FailureUnexpected("예기치 못한 오류입니다."));
       }
 
       final accessToken = response.body["access_token"];
