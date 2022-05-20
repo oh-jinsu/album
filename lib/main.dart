@@ -2,8 +2,9 @@ import 'package:album/application/effects/app/auto_sign_in.dart';
 import 'package:album/application/effects/app/bootstrap.dart';
 import 'package:album/application/effects/album/precache_found_list.dart';
 import 'package:album/application/effects/app/escort.dart';
+import 'package:album/application/effects/common/dialog.dart';
 import 'package:album/application/effects/sign_in/guest_sign_in.dart';
-import 'package:album/application/effects/app/invitation.dart';
+import 'package:album/application/effects/invitation/invitation.dart';
 import 'package:album/application/effects/app/navigation.dart';
 import 'package:album/application/effects/app/fetch_album_list_after_sign_in.dart';
 import 'package:album/application/effects/app/fetch_user_after_sign_in.dart';
@@ -32,6 +33,7 @@ class App extends Component {
     useStore(() => UserStore());
 
     useEffect(() => NavigationEffect());
+    useEffect(() => DialogEffect());
     useEffect(() => InvitationEffect());
     useEffect(() => GuestSignInEffect());
     useEffect(() => FetchUserAfterSignInEffect());

@@ -9,7 +9,17 @@ import "package:codux/codux.dart";
 class PrecacheAddedAlbumEffect extends Effect {
   PrecacheAddedAlbumEffect() {
     on<AlbumAdded>((event) async {
-      final precacheService = Dependency.find<PrecacheService>();
+      final service = Dependency.find<PrecacheService>();
+
+      final coverImageUri = event.model.coverImageUri;
+
+      final coverPrecachedModel = coverImageUri == null
+          ? event.model
+          : event.model.copy(
+              coverImageUri: New(await service.fromNetwork(
+              coverImageUri,
+              resolution: Resolution.xhdpi,
+            )));
 
       final friends = await Future.wait(event.model.friends.map(
         (friend) async {
@@ -19,7 +29,7 @@ class PrecacheAddedAlbumEffect extends Effect {
             return friend;
           }
 
-          final cachedUri = await precacheService.fromNetwork(
+          final cachedUri = await service.fromNetwork(
             uri,
             resolution: Resolution.mdpi,
           );
@@ -28,7 +38,7 @@ class PrecacheAddedAlbumEffect extends Effect {
         },
       ));
 
-      final model = event.model.copy(
+      final model = coverPrecachedModel.copy(
         friends: New(friends),
       );
 
