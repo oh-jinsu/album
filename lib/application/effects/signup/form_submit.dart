@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:album/application/events/auth/sign_up_form_pending.dart';
 import 'package:album/application/events/auth/sign_up_form_submitted.dart';
-import 'package:album/application/events/user/found.dart';
-import 'package:album/application/models/user/user.dart';
+import 'package:album/application/events/auth/signed_in.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
 import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
@@ -53,7 +52,7 @@ class SubmitSignUpFormEffect extends Effect {
         body: {
           "avatar": avatar,
           "name": event.name,
-          "email": event.email,
+          "email": event.email.isEmpty ? null : event.email,
         },
       );
 
@@ -61,9 +60,7 @@ class SubmitSignUpFormEffect extends Effect {
         return;
       }
 
-      final model = UserModel.fromJson(userRes.body);
-
-      dispatch(UserFound(model));
+      dispatch(const SignedIn());
     });
   }
 
