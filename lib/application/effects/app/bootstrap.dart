@@ -14,6 +14,7 @@ import 'package:album/infrastructure/services/share/share.dart';
 import 'package:album/utilities/dependency.dart';
 import 'package:codux/codux.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class BootstrapEffect extends Effect {
@@ -37,7 +38,10 @@ class BootstrapEffect extends Effect {
       dispatch(const RepositoryLoaded());
     });
     on<RepositoryLoaded>((event) {
-      Dependency.factory<Client>(() => Client(dotenv.get("API_HOST")));
+      final apiHost =
+          kDebugMode ? dotenv.get("API_HOST_FOR_DEV") : dotenv.get("API_HOST");
+
+      Dependency.factory<Client>(() => Client(apiHost));
       Dependency.single<PrecacheService>(PrecacheService());
       Dependency.single<JwtService>(JwtService());
       Dependency.single<ShareService>(ShareService());
