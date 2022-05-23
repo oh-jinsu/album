@@ -5,6 +5,7 @@ import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
 import 'package:codux/codux.dart';
 import 'package:album/utilities/dependency.dart';
+import 'package:flutter/cupertino.dart';
 
 mixin AuthEffectMixin on Effect {
   Future<Response> withAuth(
@@ -27,32 +28,39 @@ mixin AuthEffectMixin on Effect {
     try {
       final result = await request(client.auth(accessToken));
 
-      if (result is FailureResponse && result.code == 102) {
-        final refreshToken = await authRepository.findRefreshToken();
+      if (result is FailureResponse) {
+        switch (result.code) {
+          case 102:
+            final refreshToken = await authRepository.findRefreshToken();
 
-        if (refreshToken == null) {
-          dispatch(const SignOutRequested());
+            if (refreshToken == null) {
+              dispatch(const SignOutRequested());
 
-          return result;
+              return result;
+            }
+
+            final client = Dependency.find<Client>();
+
+            final response = await client.body({
+              "refresh_token": refreshToken,
+            }).post("auth/refresh");
+
+            if (response is! SuccessResponse) {
+              dispatch(const SignOutRequested());
+
+              return response;
+            }
+
+            final accessToken = response.body["access_token"];
+
+            await authRepository.saveAccessToken(accessToken);
+
+            return withAuth(request);
+          case 104:
+            await Navigator.of(requireContext()).pushNamed("/signin");
+
+            return withAuth(request);
         }
-
-        final client = Dependency.find<Client>();
-
-        final response = await client.body({
-          "refresh_token": refreshToken,
-        }).post("auth/refresh");
-
-        if (response is! SuccessResponse) {
-          dispatch(const SignOutRequested());
-
-          return response;
-        }
-
-        final accessToken = response.body["access_token"];
-
-        await authRepository.saveAccessToken(accessToken);
-
-        return withAuth(request);
       }
 
       return result;
