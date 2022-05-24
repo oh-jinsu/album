@@ -16,15 +16,6 @@ class ProfilePage extends Component {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  void onCreated(BuildContext context) {
-    useStore(() => SignOutFormStore());
-
-    useEffect(() => SignOutEffect());
-
-    super.onCreated(context);
-  }
-
-  @override
   Widget render(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.systemGroupedBackground,
