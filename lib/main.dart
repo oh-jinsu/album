@@ -17,6 +17,7 @@ import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/album/page.dart';
 import 'package:album/presentation/home/page.dart';
 import 'package:album/presentation/profile/page.dart';
+import 'package:album/presentation/shop/page.dart';
 import 'package:album/presentation/signin/page.dart';
 import 'package:album/presentation/signup/page.dart';
 import 'package:album/presentation/splash/page.dart';
@@ -64,18 +65,18 @@ class App extends Component {
     return CupertinoApp(
       onGenerateRoute: (settings) {
         if (settings.name == "/splash") {
-          return CupertinoPageRoute(
-            settings: settings,
-            builder: (context) => const SplashPage(),
-          );
-        }
-
-        if (settings.name == "/home") {
           return PageRouteBuilder(
             settings: settings,
             transitionDuration: Duration.zero,
             pageBuilder: (context, animation, secondAnimation) =>
-                const HomePage(),
+                const SplashPage(),
+          );
+        }
+
+        if (settings.name == "/home") {
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const HomePage(),
           );
         }
 
@@ -91,12 +92,17 @@ class App extends Component {
           );
         }
 
-        if (settings.name == "/profile") {
-          return PageRouteBuilder(
+        if (settings.name == "/shop") {
+          return CupertinoPageRoute(
             settings: settings,
-            transitionDuration: Duration.zero,
-            pageBuilder: (context, animation, secondAnimation) =>
-                const ProfilePage(),
+            builder: (context) => const ShopPage(),
+          );
+        }
+
+        if (settings.name == "/profile") {
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const ProfilePage(),
           );
         }
 
