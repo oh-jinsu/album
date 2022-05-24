@@ -1,4 +1,3 @@
-import 'package:album/application/effects/app/sign_out.dart';
 import 'package:album/application/events/auth/sign_out_requested.dart';
 import 'package:album/application/events/navigation/pushed.dart';
 import 'package:album/application/models/auth/sign_out_form.dart';

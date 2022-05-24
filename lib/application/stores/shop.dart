@@ -1,3 +1,4 @@
+import 'package:album/application/events/shop/purchase_canceled.dart';
 import 'package:album/application/events/shop/purchase_completed.dart';
 import 'package:album/application/events/shop/purchase_pending.dart';
 import 'package:album/application/events/shop/list_of_item_found.dart';
@@ -20,6 +21,15 @@ class ShopStore extends Store<List<ShopItemModel>> {
       }).toList();
     });
     on<PurchaseCompleted>((current, event) {
+      return current.state.map((e) {
+        if (e.details.id != event.id) {
+          return e;
+        }
+
+        return e.copy(isPending: const New(false));
+      }).toList();
+    });
+    on<PurchaseCanceled>((current, event) {
       return current.state.map((e) {
         if (e.details.id != event.id) {
           return e;
