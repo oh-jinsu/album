@@ -1,5 +1,5 @@
-import 'package:album/application/events/shop/item_completed.dart';
-import 'package:album/application/events/shop/item_pending.dart';
+import 'package:album/application/events/shop/purchase_completed.dart';
+import 'package:album/application/events/shop/purchase_pending.dart';
 import 'package:album/application/events/shop/list_of_item_found.dart';
 import 'package:album/application/models/common/argument.dart';
 import 'package:album/application/models/shop/item.dart';
@@ -10,7 +10,7 @@ class ShopStore extends Store<List<ShopItemModel>> {
     on<ListOfShopItemFound>((current, event) {
       return event.model;
     });
-    on<ShopItemPending>((current, event) {
+    on<PurchasePending>((current, event) {
       return current.state.map((e) {
         if (e.details.id != event.id) {
           return e;
@@ -19,7 +19,7 @@ class ShopStore extends Store<List<ShopItemModel>> {
         return e.copy(isPending: const New(true));
       }).toList();
     });
-    on<ShopItemCompleted>((current, event) {
+    on<PurchaseCompleted>((current, event) {
       return current.state.map((e) {
         if (e.details.id != event.id) {
           return e;

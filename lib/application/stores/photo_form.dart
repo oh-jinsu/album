@@ -1,6 +1,7 @@
+import 'package:album/application/events/photo/form_completed.dart';
 import 'package:album/application/events/photo/form_date_changed.dart';
 import 'package:album/application/events/photo/form_description_changed.dart';
-import 'package:album/application/events/photo/pending.dart';
+import 'package:album/application/events/photo/form_pending.dart';
 import 'package:album/application/events/photo/file_selected.dart';
 import 'package:album/application/models/common/argument.dart';
 import 'package:album/application/models/common/state.dart';
@@ -35,6 +36,11 @@ class PhotoFormStore extends Store<PhotoFormModel> {
     on<PhotoFormPending>((current, event) {
       return current.state.copy(
         state: const New(SubmitFormState.pending),
+      );
+    });
+    on<PhotoFormCompleted>((current, event) {
+      return current.state.copy(
+        state: const New(SubmitFormState.enabled),
       );
     });
   }

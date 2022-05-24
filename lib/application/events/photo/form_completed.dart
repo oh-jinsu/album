@@ -1,0 +1,3 @@
+class PhotoFormCompleted {
+  const PhotoFormCompleted();
+}
