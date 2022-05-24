@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class AlbumOpened implements Event {
+class AlbumOpened {
   final String id;
 
   const AlbumOpened({

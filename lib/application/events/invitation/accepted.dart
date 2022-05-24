@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class InvitationAccepted implements Event {
+class InvitationAccepted {
   final String token;
 
   const InvitationAccepted({required this.token});

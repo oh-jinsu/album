@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class Escorted implements Event {
+class Escorted {
   const Escorted();
 }

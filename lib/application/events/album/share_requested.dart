@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class AlbumShareRequested implements Event {
+class AlbumShareRequested {
   final String id;
 
   const AlbumShareRequested(this.id);

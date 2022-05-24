@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class RepositoryLoaded implements Event {
+class RepositoryLoaded {
   const RepositoryLoaded();
 }

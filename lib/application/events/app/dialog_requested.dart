@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class DialogRequested implements Event {
+class DialogRequested {
   final String message;
 
   const DialogRequested(this.message);

@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class PhotoFormImagePickerTapped implements Event {
+class PhotoFormImagePickerTapped {
   const PhotoFormImagePickerTapped();
 }

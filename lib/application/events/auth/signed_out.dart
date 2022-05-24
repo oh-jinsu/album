@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class SignedOut implements Event {
+class SignedOut {
   const SignedOut();
 }

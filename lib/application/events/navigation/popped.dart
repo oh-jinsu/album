@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class Popped implements Event {
+class Popped {
   const Popped();
 }

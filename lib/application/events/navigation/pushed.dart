@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class Pushed implements Event {
+class Pushed {
   final String name;
   final Map<String, dynamic>? arguments;
 

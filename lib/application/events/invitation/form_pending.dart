@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class InvitationFormPending implements Event {
+class InvitationFormPending {
   const InvitationFormPending();
 }

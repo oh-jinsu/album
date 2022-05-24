@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:codux/codux.dart';
-
-class SignUpFormAvatarSelected implements Event {
+class SignUpFormAvatarSelected {
   final File file;
 
   const SignUpFormAvatarSelected(this.file);

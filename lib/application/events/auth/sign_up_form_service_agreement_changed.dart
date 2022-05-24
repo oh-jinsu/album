@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class SignUpFormServiceAgreementChanged implements Event {
+class SignUpFormServiceAgreementChanged {
   final bool value;
 
   const SignUpFormServiceAgreementChanged(this.value);

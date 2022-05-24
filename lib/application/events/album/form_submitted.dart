@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class AlbumFormSumitted implements Event {
+class AlbumFormSumitted {
   final String title;
 
   const AlbumFormSumitted({

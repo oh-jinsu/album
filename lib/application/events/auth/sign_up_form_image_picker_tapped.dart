@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class SignUpFormAvatarPickerTapped implements Event {
+class SignUpFormAvatarPickerTapped {
   const SignUpFormAvatarPickerTapped();
 }

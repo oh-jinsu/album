@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class AppReady implements Event {
+class AppReady {
   const AppReady();
 }

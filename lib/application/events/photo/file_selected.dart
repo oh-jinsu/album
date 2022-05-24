@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:codux/codux.dart';
-
-class PhotoFormFileSelected implements Event {
+class PhotoFormFileSelected {
   final File value;
 
   const PhotoFormFileSelected(this.value);

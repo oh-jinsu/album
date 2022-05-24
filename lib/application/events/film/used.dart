@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class FilmUsed implements Event {
+class FilmUsed {
   const FilmUsed();
 }

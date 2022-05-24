@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:codux/codux.dart';
-
-class SignUpFormSubmitted implements Event {
+class SignUpFormSubmitted {
   final String provider;
   final String idToken;
   final File? avatar;

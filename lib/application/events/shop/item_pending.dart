@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class ShopItemPending implements Event {
+class ShopItemPending {
   final String id;
 
   const ShopItemPending(this.id);

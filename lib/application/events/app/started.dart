@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class AppStarted implements Event {
+class AppStarted {
   const AppStarted();
 }

@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class SignUpFormEmailChanged implements Event {
+class SignUpFormEmailChanged {
   final String value;
 
   const SignUpFormEmailChanged(this.value);

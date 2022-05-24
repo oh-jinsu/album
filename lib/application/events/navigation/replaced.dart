@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class Replaced implements Event {
+class Replaced {
   final String name;
   final Map<String, dynamic>? arguments;
 

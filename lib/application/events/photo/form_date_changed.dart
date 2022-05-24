@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class PhotoFormDateChanged implements Event {
+class PhotoFormDateChanged {
   final DateTime value;
 
   const PhotoFormDateChanged(this.value);

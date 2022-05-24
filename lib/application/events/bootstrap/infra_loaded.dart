@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class InfraLoaded implements Event {
+class InfraLoaded {
   const InfraLoaded();
 }

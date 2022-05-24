@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class PhotoFormPending implements Event {
+class PhotoFormPending {
   const PhotoFormPending();
 }

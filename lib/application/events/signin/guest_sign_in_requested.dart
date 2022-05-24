@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class GuestSignInRequested implements Event {
+class GuestSignInRequested {
   const GuestSignInRequested();
 }

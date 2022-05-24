@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class InvitationFormCanceled implements Event {
+class InvitationFormCanceled {
   const InvitationFormCanceled();
 }

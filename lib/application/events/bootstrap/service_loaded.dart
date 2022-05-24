@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class ServiceLoaded implements Event {
+class ServiceLoaded {
   const ServiceLoaded();
 }

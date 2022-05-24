@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:codux/codux.dart';
-
-class PhotoFormSubmitted extends Event {
+class PhotoFormSubmitted {
   final String albumId;
   final File file;
   final DateTime date;

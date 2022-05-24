@@ -1,6 +1,4 @@
-import 'package:codux/codux.dart';
-
-class ThirdPartyAccountFound implements Event {
+class ThirdPartyAccountFound {
   final String provider;
   final String idToken;
   final String? name;

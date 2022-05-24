@@ -1,5 +1,3 @@
-import 'package:codux/codux.dart';
-
-class EnvLoaded implements Event {
+class EnvLoaded {
   const EnvLoaded();
 }
