@@ -4,6 +4,9 @@ import 'package:album/application/effects/album/precache_found_list.dart';
 import 'package:album/application/effects/app/escort.dart';
 import 'package:album/application/effects/common/dialog.dart';
 import 'package:album/application/effects/film/count.dart';
+import 'package:album/application/effects/film/request_film.dart';
+import 'package:album/application/effects/shop/fetch_list_of_item.dart';
+import 'package:album/application/effects/shop/purchase.dart';
 import 'package:album/application/effects/sign_in/guest_sign_in.dart';
 import 'package:album/application/effects/invitation/invitation.dart';
 import 'package:album/application/effects/app/navigation.dart';
@@ -13,6 +16,7 @@ import 'package:album/application/effects/user/precache_found_user.dart';
 import 'package:album/application/events/app/started.dart';
 import 'package:album/application/stores/film.dart';
 import 'package:album/application/stores/list_of_album.dart';
+import 'package:album/application/stores/shop.dart';
 import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/album/page.dart';
 import 'package:album/presentation/home/page.dart';
@@ -35,6 +39,7 @@ class App extends Component {
     useStore(() => ListOfAlbumStore());
     useStore(() => UserStore());
     useStore(() => FilmStore());
+    useStore(() => ShopStore());
 
     useEffect(() => NavigationEffect());
     useEffect(() => DialogEffect());
@@ -45,6 +50,9 @@ class App extends Component {
     useEffect(() => PrecacheFoundUserEffect());
     useEffect(() => PrecacheFoundAlbumListEffect());
     useEffect(() => CountFilmEffect());
+    useEffect(() => FetchListOfShopItemEffect());
+    useEffect(() => PurchaseEffect());
+    useEffect(() => RequestFilmEffect());
 
     useEffect(() => BootstrapEffect(), until: SplashPage);
     useEffect(() => AutoSignInEffect(), until: SplashPage);

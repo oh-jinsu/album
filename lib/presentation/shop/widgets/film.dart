@@ -6,34 +6,32 @@ class ShopFilmImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        padding: const EdgeInsets.all(6.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              offset: const Offset(0.0, 4.0),
-              blurRadius: 8.0,
-              spreadRadius: 0.0,
+    return Container(
+      width: 24.0,
+      height: 30.0,
+      padding: const EdgeInsets.all(3.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(0.0, 1.0),
+            blurRadius: 2.0,
+            spreadRadius: 0.0,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AspectRatio(
+            aspectRatio: 1.0,
+            child: Container(
+              color: CupertinoColors.quaternarySystemFill.withOpacity(.15),
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AspectRatio(
-              aspectRatio: 1.0,
-              child: Container(
-                color: CupertinoColors.quaternarySystemFill.withOpacity(.1),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
