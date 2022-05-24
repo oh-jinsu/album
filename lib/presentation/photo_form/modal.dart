@@ -1,6 +1,6 @@
 import 'package:album/application/effects/photo_form/pick_image.dart';
 import 'package:album/application/effects/photo_form/submit.dart';
-import 'package:album/application/events/navigation/popped.dart';
+import 'package:album/application/effects/photo_form/waiter.dart';
 import 'package:album/application/events/photo/form_date_changed.dart';
 import 'package:album/application/events/photo/form_description_changed.dart';
 import 'package:album/application/events/photo/picker_tapped.dart';
@@ -8,7 +8,7 @@ import 'package:album/application/events/photo/submitted.dart';
 import 'package:album/application/models/common/state.dart';
 import 'package:album/application/models/photo/form.dart';
 import 'package:album/application/stores/photo_form.dart';
-import 'package:album/presentation/photo_form/widgets/container.dart';
+import 'package:album/presentation/photo_form/components/container.dart';
 import 'package:album/presentation/photo_form/widgets/date_picker.dart';
 import 'package:album/presentation/photo_form/widgets/submit_button.dart';
 import "package:codux/codux.dart";
@@ -25,6 +25,7 @@ class PhotoFormModal extends Component {
 
     useEffect(() => PickImageEffect());
     useEffect(() => SubmitPhotoFormEffect());
+    useEffect(() => PhotoFormWaiterEffect());
 
     super.onCreated(context);
   }
@@ -32,7 +33,6 @@ class PhotoFormModal extends Component {
   @override
   Widget render(BuildContext context) {
     return PhotoEditorContainer(
-      onCanceled: () => dispatch(const Popped()),
       child: StreamBuilder(
         stream: find<PhotoFormStore>().stream,
         builder: (context, snapshot) {

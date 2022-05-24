@@ -23,26 +23,28 @@ class PhotoEditorSubmitButton extends StatelessWidget {
         : CupertinoColors.systemGrey2;
 
     return Button(
-        backgroundColor: backgroundColor,
-        onPressed: () {
-          if (state == SubmitFormState.enabled) {
-            onPressed.call();
-          }
-        },
-        child: SizedBox(
-            width: double.infinity,
-            height: 48.0,
-            child: Center(
-              child: state == SubmitFormState.pending
-                  ? CupertinoActivityIndicator(color: foregroundColor)
-                  : Text(
-                      "추가하기",
-                      style: TextStyle(
-                        color: foregroundColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
-                    ),
-            )));
+      backgroundColor: backgroundColor,
+      onPressed: () {
+        if (state == SubmitFormState.enabled) {
+          onPressed.call();
+        }
+      },
+      child: SizedBox(
+        width: double.infinity,
+        height: 48.0,
+        child: Center(
+          child: state == SubmitFormState.pending
+              ? CupertinoActivityIndicator(color: foregroundColor)
+              : Text(
+                  "추가하기",
+                  style: TextStyle(
+                    color: foregroundColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+        ),
+      ),
+    );
   }
 }

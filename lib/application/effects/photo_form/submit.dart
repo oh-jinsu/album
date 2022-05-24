@@ -1,6 +1,6 @@
 import 'package:album/application/effects/common/auth.dart';
 import 'package:album/application/events/app/dialog_requested.dart';
-import 'package:album/application/events/navigation/popped.dart';
+import 'package:album/application/events/film/used.dart';
 import 'package:album/application/events/photo/added.dart';
 import 'package:album/application/events/photo/pending.dart';
 import 'package:album/application/events/photo/submitted.dart';
@@ -42,7 +42,7 @@ class SubmitPhotoFormEffect extends Effect with AuthEffectMixin {
 
       dispatch(PhotoAdded(model));
 
-      dispatch(const Popped());
+      dispatch(const FilmUsed());
     });
   }
 }
