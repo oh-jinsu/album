@@ -1,3 +1,4 @@
+import 'package:album/application/events/album/exited.dart';
 import 'package:album/application/events/album/precached_added.dart';
 import 'package:album/application/events/album/precached_list_of_found.dart';
 import 'package:album/application/events/photo/precached_added.dart';
@@ -37,6 +38,15 @@ class ListOfAlbumStore extends Store<ListOfAlbumModel> {
       }).toList();
 
       return current.state.copy(items: New(items));
+    });
+    on<AlbumExited>((current, event) {
+      return current.state.copy(
+        items: New(
+          current.state.items
+              .where((element) => element.id != event.id)
+              .toList(),
+        ),
+      );
     });
   }
 }
