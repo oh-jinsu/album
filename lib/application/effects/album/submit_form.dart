@@ -2,7 +2,7 @@ import 'package:album/application/effects/common/auth.dart';
 import 'package:album/application/events/album/added.dart';
 import 'package:album/application/events/album/form_pending.dart';
 import 'package:album/application/events/album/form_submitted.dart';
-import 'package:album/application/events/app/failure_unexpected.dart';
+import 'package:album/application/events/app/dialog_requested.dart';
 import 'package:album/application/events/navigation/popped.dart';
 import 'package:album/application/models/album/album.dart';
 import 'package:album/infrastructure/services/client/response.dart';
@@ -20,7 +20,7 @@ class SubmitAlbumFormEffect extends Effect with AuthEffectMixin {
       );
 
       if (response is! SuccessResponse) {
-        return dispatch(FailureUnexpected(
+        return dispatch(DialogRequested(
           response is FailureResponse ? response.message : "예기치 못한 오류입니다.",
         ));
       }

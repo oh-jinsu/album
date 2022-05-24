@@ -1,10 +1,10 @@
-import 'package:album/application/events/app/failure_unexpected.dart';
+import 'package:album/application/events/app/dialog_requested.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 
 class DialogEffect extends Effect {
   DialogEffect() {
-    on<FailureUnexpected>((event) {
+    on<DialogRequested>((event) {
       showCupertinoDialog(
         context: requireContext(),
         builder: (context) {

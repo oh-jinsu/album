@@ -1,5 +1,5 @@
 import 'package:album/application/effects/common/client.dart';
-import 'package:album/application/events/app/failure_unexpected.dart';
+import 'package:album/application/events/app/dialog_requested.dart';
 import 'package:album/application/events/auth/signed_in.dart';
 import 'package:album/application/events/bootstrap/bootstrap_finished.dart';
 import 'package:album/application/events/signin/guest_sign_in_requested.dart';
@@ -26,7 +26,7 @@ class AutoSignInEffect extends Effect with ClientEffectMixin {
       if (response is! SuccessResponse) {
         if (response is FailureResponse && response.code == 1) {
           dispatch(
-            const FailureUnexpected("계정 보안을 위해 로그아웃되었어요. 다시 로그인해 주세요."),
+            const DialogRequested("계정 보안을 위해 로그아웃되었어요. 다시 로그인해 주세요."),
           );
         }
 

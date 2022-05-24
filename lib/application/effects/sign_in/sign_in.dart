@@ -1,5 +1,5 @@
 import 'package:album/application/effects/common/client.dart';
-import 'package:album/application/events/app/failure_unexpected.dart';
+import 'package:album/application/events/app/dialog_requested.dart';
 import 'package:album/application/events/auth/signed_in.dart';
 import 'package:album/application/events/auth/third_party_account_found.dart';
 import 'package:album/application/events/navigation/replaced.dart';
@@ -29,14 +29,14 @@ class SignInEffect extends Effect with ClientEffectMixin {
               "email": event.email,
             }));
           } else {
-            dispatch(FailureUnexpected(response.message));
+            dispatch(DialogRequested(response.message));
           }
 
           return;
         }
 
         if (response is! SuccessResponse) {
-          return dispatch(const FailureUnexpected("예기치 못한 오류입니다."));
+          return dispatch(const DialogRequested("예기치 못한 오류입니다."));
         }
 
         final accessToken = response.body["access_token"];

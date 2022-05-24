@@ -1,5 +1,5 @@
 import 'package:album/application/effects/common/auth.dart';
-import 'package:album/application/events/app/failure_unexpected.dart';
+import 'package:album/application/events/app/dialog_requested.dart';
 import 'package:album/application/events/auth/signed_in.dart';
 import 'package:album/application/events/signin/signed_in_with_guest.dart';
 import 'package:album/application/events/user/found.dart';
@@ -30,7 +30,7 @@ class FetchUserAfterSignInEffect extends Effect with AuthEffectMixin {
         final response = await withAuth((client) => client.get("user/me"));
 
         if (response is! SuccessResponse) {
-          return dispatch(const FailureUnexpected("예기치 못한 오류입니다."));
+          return dispatch(const DialogRequested("예기치 못한 오류입니다."));
         }
 
         final model = UserModel.fromJson(response.body);
@@ -44,7 +44,7 @@ class FetchUserAfterSignInEffect extends Effect with AuthEffectMixin {
       final response = await withAuth((client) => client.post("user/guest"));
 
       if (response is! SuccessResponse) {
-        return dispatch(const FailureUnexpected("예기치 못한 오류입니다."));
+        return dispatch(const DialogRequested("예기치 못한 오류입니다."));
       }
 
       dispatch(const UserPrefetched());

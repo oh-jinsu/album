@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:album/application/effects/common/auth.dart';
-import 'package:album/application/events/app/failure_unexpected.dart';
+import 'package:album/application/events/app/dialog_requested.dart';
 import 'package:album/application/events/auth/sign_up_form_pending.dart';
 import 'package:album/application/events/auth/sign_up_form_submitted.dart';
 import 'package:album/application/events/auth/signed_in.dart';
@@ -24,7 +24,7 @@ class SubmitSignUpFormEffect extends Effect with AuthEffectMixin {
       );
 
       if (authRes is! SuccessResponse) {
-        return dispatch(FailureUnexpected(
+        return dispatch(DialogRequested(
           authRes is FailureResponse ? authRes.message : "예기치 못한 오류입니다.",
         ));
       }
@@ -48,7 +48,7 @@ class SubmitSignUpFormEffect extends Effect with AuthEffectMixin {
       );
 
       if (userRes is! SuccessResponse) {
-        return dispatch(FailureUnexpected(
+        return dispatch(DialogRequested(
           userRes is FailureResponse ? userRes.message : "예기치 못한 오류입니다.",
         ));
       }
@@ -70,7 +70,7 @@ class SubmitSignUpFormEffect extends Effect with AuthEffectMixin {
     );
 
     if (response is! SuccessResponse) {
-      dispatch(const FailureUnexpected("예기치 못한 오류입니다."));
+      dispatch(const DialogRequested("예기치 못한 오류입니다."));
 
       return null;
     }

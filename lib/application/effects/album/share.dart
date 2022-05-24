@@ -1,6 +1,6 @@
 import 'package:album/application/effects/common/auth.dart';
 import 'package:album/application/events/album/share_requested.dart';
-import 'package:album/application/events/app/failure_unexpected.dart';
+import 'package:album/application/events/app/dialog_requested.dart';
 import 'package:album/application/events/navigation/popped.dart';
 import 'package:album/application/events/navigation/replaced.dart';
 import 'package:album/infrastructure/repositories/auth.dart';
@@ -29,7 +29,7 @@ class ShareAlbumEffect extends Effect with AuthEffectMixin {
       );
 
       if (response is! SuccessResponse) {
-        return dispatch(const FailureUnexpected("예기치 못한 오류입니다."));
+        return dispatch(const DialogRequested("예기치 못한 오류입니다."));
       }
 
       final url = response.body["url"];
