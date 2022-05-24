@@ -3,7 +3,11 @@ import 'package:album/application/effects/album/waiter.dart';
 import 'package:album/application/effects/photo/delete.dart';
 import 'package:album/application/events/album/exit_requested.dart';
 import 'package:album/application/events/photo/delete_requested.dart';
+import 'package:album/application/models/common/option.dart';
+import 'package:album/application/models/user/user.dart';
 import 'package:album/application/stores/album_current.dart';
+import 'package:album/application/stores/list_of_photo.dart';
+import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/album/components/friend_list.dart';
 import 'package:album/presentation/common/widgets/button.dart';
 import 'package:album/presentation/photo_form/modal.dart';
@@ -27,6 +31,27 @@ class AlbumBottomNavigationComponent extends Component {
     useEffect(() => DeletePhotoEffect());
 
     super.onCreated(context);
+  }
+
+  bool _canDeleteCurrent() {
+    if (!find<AlbumCurrentStore>().stream.hasValue) {
+      return false;
+    }
+
+    final user = find<UserStore>().stream.value;
+
+    if (user is! Some<UserModel>) {
+      return true;
+    }
+
+    final photos = find<ListOfPhotoStore>().stream.value;
+
+    final photo = photos.items.firstWhere(
+        (element) => element.id == find<AlbumCurrentStore>().stream.value);
+
+    final owner = photo.userId;
+
+    return owner == user.value.id;
   }
 
   @override
@@ -76,7 +101,7 @@ class AlbumBottomNavigationComponent extends Component {
                   builder: (context) {
                     return CupertinoActionSheet(
                       actions: [
-                        if (find<AlbumCurrentStore>().stream.hasValue)
+                        if (_canDeleteCurrent())
                           CupertinoActionSheetAction(
                             onPressed: () {
                               dispatch(
