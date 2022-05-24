@@ -1,3 +1,4 @@
+import 'package:album/application/stores/film.dart';
 import 'package:album/presentation/common/widgets/button.dart';
 import 'package:album/presentation/album_form/dialog.dart';
 import "package:codux/codux.dart";
@@ -17,11 +18,22 @@ class HomeAppBarComponent extends Component {
         ),
         child: const Icon(CupertinoIcons.add),
       ),
-      trailing: const Text(
-        "필름 10장",
-        style: TextStyle(
-          color: CupertinoColors.activeBlue,
-        ),
+      trailing: StreamBuilder(
+        stream: find<FilmStore>().stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data as int;
+
+            return Text(
+              "필름 $data개",
+              style: const TextStyle(
+                color: CupertinoColors.activeBlue,
+              ),
+            );
+          }
+
+          return const CupertinoActivityIndicator();
+        },
       ),
     );
   }

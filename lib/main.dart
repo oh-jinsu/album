@@ -3,6 +3,7 @@ import 'package:album/application/effects/app/bootstrap.dart';
 import 'package:album/application/effects/album/precache_found_list.dart';
 import 'package:album/application/effects/app/escort.dart';
 import 'package:album/application/effects/common/dialog.dart';
+import 'package:album/application/effects/film/count.dart';
 import 'package:album/application/effects/sign_in/guest_sign_in.dart';
 import 'package:album/application/effects/invitation/invitation.dart';
 import 'package:album/application/effects/app/navigation.dart';
@@ -10,6 +11,7 @@ import 'package:album/application/effects/app/fetch_album_list_after_sign_in.dar
 import 'package:album/application/effects/app/fetch_user_after_sign_in.dart';
 import 'package:album/application/effects/user/precache_found_user.dart';
 import 'package:album/application/events/app/started.dart';
+import 'package:album/application/stores/film.dart';
 import 'package:album/application/stores/list_of_album.dart';
 import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/album/page.dart';
@@ -31,6 +33,7 @@ class App extends Component {
   void onCreated(BuildContext context) {
     useStore(() => ListOfAlbumStore());
     useStore(() => UserStore());
+    useStore(() => FilmStore());
 
     useEffect(() => NavigationEffect());
     useEffect(() => DialogEffect());
@@ -40,6 +43,7 @@ class App extends Component {
     useEffect(() => FetchAlbumListAfterSignInEffect());
     useEffect(() => PrecacheFoundUserEffect());
     useEffect(() => PrecacheFoundAlbumListEffect());
+    useEffect(() => CountFilmEffect());
 
     useEffect(() => BootstrapEffect(), until: SplashPage);
     useEffect(() => AutoSignInEffect(), until: SplashPage);
