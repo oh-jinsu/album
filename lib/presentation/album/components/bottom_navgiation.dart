@@ -1,6 +1,9 @@
 import 'package:album/application/effects/album/exit.dart';
 import 'package:album/application/effects/album/waiter.dart';
+import 'package:album/application/effects/photo/delete.dart';
 import 'package:album/application/events/album/exit_requested.dart';
+import 'package:album/application/events/photo/delete_requested.dart';
+import 'package:album/application/stores/album_current.dart';
 import 'package:album/presentation/album/components/friend_list.dart';
 import 'package:album/presentation/common/widgets/button.dart';
 import 'package:album/presentation/photo_form/modal.dart';
@@ -21,6 +24,7 @@ class AlbumBottomNavigationComponent extends Component {
   void onCreated(BuildContext context) {
     useEffect(() => ExitAlbumEffect());
     useEffect(() => AlbumWaiterEffect());
+    useEffect(() => DeletePhotoEffect());
 
     super.onCreated(context);
   }
@@ -72,12 +76,20 @@ class AlbumBottomNavigationComponent extends Component {
                   builder: (context) {
                     return CupertinoActionSheet(
                       actions: [
-                        CupertinoActionSheetAction(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("현재 사진 삭제"),
-                        ),
+                        if (find<AlbumCurrentStore>().stream.hasValue)
+                          CupertinoActionSheetAction(
+                            onPressed: () {
+                              dispatch(
+                                PhotoDeleteRequested(
+                                  id: find<AlbumCurrentStore>().stream.value,
+                                  albumId: id,
+                                ),
+                              );
+
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("현재 사진 삭제"),
+                          ),
                         CupertinoActionSheetAction(
                           onPressed: () {
                             dispatch(AlbumExitRequested(id));

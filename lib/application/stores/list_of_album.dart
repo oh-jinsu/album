@@ -1,6 +1,8 @@
+import 'package:album/application/events/album/cover_deleted.dart';
 import 'package:album/application/events/album/exited.dart';
 import 'package:album/application/events/album/precached_added.dart';
 import 'package:album/application/events/album/precached_list_of_found.dart';
+import 'package:album/application/events/photo/deleted.dart';
 import 'package:album/application/events/photo/precached_added.dart';
 import 'package:album/application/models/album/list_of.dart';
 import 'package:album/application/models/common/argument.dart';
@@ -46,6 +48,28 @@ class ListOfAlbumStore extends Store<ListOfAlbumModel> {
               .where((element) => element.id != event.id)
               .toList(),
         ),
+      );
+    });
+    on<CoverDeleted>((current, event) {
+      return current.state.copy(
+        items: New(current.state.items.map((e) {
+          if (e.id != event.albumId) {
+            return e;
+          }
+
+          return e.copy(coverImageUri: New(event.newCoverImageUri));
+        }).toList()),
+      );
+    });
+    on<PhotoDeleted>((current, event) {
+      return current.state.copy(
+        items: New(current.state.items.map((e) {
+          if (e.id != event.albumId) {
+            return e;
+          }
+
+          return e.copy(photoCount: New(e.photoCount - 1));
+        }).toList()),
       );
     });
   }

@@ -1,4 +1,5 @@
 import 'package:album/application/effects/photo/precache_added.dart';
+import 'package:album/application/stores/album_current.dart';
 import 'package:album/presentation/album/components/album_viewer.dart';
 import 'package:album/presentation/album/components/bottom_navgiation.dart';
 import 'package:album/presentation/album/widgets/app_bar.dart';
@@ -18,6 +19,8 @@ class AlbumPage extends Component {
 
   @override
   void onCreated(BuildContext context) {
+    useStore(() => AlbumCurrentStore());
+
     useEffect(() => PrecacheAddedPhotoEffect());
 
     super.onCreated(context);

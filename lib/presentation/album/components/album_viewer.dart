@@ -1,4 +1,5 @@
 import 'package:album/application/effects/photo/fetch_list_of.dart';
+import 'package:album/application/events/album/current_changed.dart';
 import 'package:album/application/events/album/opened.dart';
 import 'package:album/application/models/photo/list_of_photo.dart';
 import 'package:album/application/models/photo/precache_list_of_photo.dart';
@@ -38,6 +39,7 @@ class AlbumViewerComponent extends Component {
           return Padding(
             padding: const EdgeInsets.only(top: 48.0),
             child: PhotoStackWidget(
+              onTopItemChanged: (id) => dispatch(AlbumCurrentChanged(id)),
               albumId: id,
               items: data.items,
             ),

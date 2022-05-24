@@ -9,6 +9,7 @@ class AlbumFloorWidget extends StatefulWidget {
   final String? description;
   final DateTime date;
   final int popDuration;
+  final bool mustRemove;
   final void Function(int) onRemove;
 
   const AlbumFloorWidget({
@@ -20,6 +21,7 @@ class AlbumFloorWidget extends StatefulWidget {
     required this.date,
     required this.popDuration,
     required this.onRemove,
+    this.mustRemove = false,
   }) : super(key: key);
 
   @override
@@ -180,8 +182,7 @@ class _AlbumFloorWidgetState extends State<AlbumFloorWidget>
     _slideAnimationController.forward(from: 0.0);
 
     _slideAnimationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed ||
-          status == AnimationStatus.dismissed) {
+      if (status == AnimationStatus.completed) {
         widget.onRemove(widget.index);
       }
     });
@@ -254,6 +255,15 @@ class _AlbumFloorWidgetState extends State<AlbumFloorWidget>
         Tween(begin: _positionZ * -10, end: _positionZ).animate(curve);
 
     pop();
+  }
+
+  @override
+  void didUpdateWidget(covariant AlbumFloorWidget oldWidget) {
+    if (widget.mustRemove) {
+      Future.delayed(Duration.zero, () => slide(const Offset(0.05, 1)));
+    }
+
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

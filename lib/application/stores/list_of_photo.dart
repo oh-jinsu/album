@@ -1,3 +1,4 @@
+import 'package:album/application/events/photo/deleted.dart';
 import 'package:album/application/events/photo/precached_added.dart';
 import 'package:album/application/events/photo/precached_list_of_photo_found.dart';
 import 'package:album/application/models/common/argument.dart';
@@ -24,6 +25,15 @@ class ListOfPhotoStore extends Store<ListOfPhotoModel> {
       }
 
       return ListOfPhotoModel(next: null, items: [event.model]);
+    });
+    on<PhotoDeleted>((current, event) {
+      return current.state.copy(
+        items: New(
+          current.state.items
+              .where((element) => element.id != event.id)
+              .toList(),
+        ),
+      );
     });
   }
 }
