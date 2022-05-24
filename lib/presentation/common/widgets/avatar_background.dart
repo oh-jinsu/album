@@ -17,7 +17,7 @@ class AvatarBackground extends StatelessWidget {
       child: Icon(
         CupertinoIcons.person_fill,
         color: CupertinoColors.systemGrey2,
-        size: radius * 0.5,
+        size: radius * 0.6,
       ),
     );
   }

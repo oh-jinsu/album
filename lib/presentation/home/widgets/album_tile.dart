@@ -1,5 +1,5 @@
 import 'package:album/application/models/album/album.dart';
-import 'package:album/presentation/home/widgets/album_tile_avatar.dart';
+import 'package:album/presentation/common/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +44,7 @@ class AlbumTile extends StatelessWidget {
                           ),
                         )
                       : Container(
-                          color: CupertinoColors.secondarySystemBackground,
+                          color: CupertinoColors.systemGrey6,
                         ),
                 ),
                 const SizedBox(height: 8.0),
@@ -52,8 +52,9 @@ class AlbumTile extends StatelessWidget {
                   children: [
                     for (int j = 0; j < item.friends.length * 2 - 1; j++)
                       if (j % 2 == 0)
-                        AlbumTileAvatar(
-                          networkImageUri: item.friends[j ~/ 2].avatarImageUri,
+                        Avatar(
+                          imageUri: item.friends[j ~/ 2].avatarImageUri,
+                          radius: 18.0,
                         )
                       else
                         const SizedBox(width: 4.0)
