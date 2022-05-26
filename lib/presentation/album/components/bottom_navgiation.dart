@@ -103,7 +103,37 @@ class AlbumBottomNavigationComponent extends Component {
                       actions: [
                         if (_canDeleteCurrent())
                           CupertinoActionSheetAction(
-                            onPressed: () {
+                            onPressed: () async {
+                              final bool ok = await showCupertinoDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CupertinoAlertDialog(
+                                    title: const Text("경고"),
+                                    content: const Text(
+                                      "이 앨범에 저장된 사진을 지웁니다.\n계속하시겠습니까?",
+                                    ),
+                                    actions: [
+                                      CupertinoButton(
+                                        child: const Text("취소"),
+                                        onPressed: () {
+                                          Navigator.pop(context, false);
+                                        },
+                                      ),
+                                      CupertinoButton(
+                                        child: const Text("확인"),
+                                        onPressed: () {
+                                          Navigator.pop(context, true);
+                                        },
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+
+                              if (!ok) {
+                                return;
+                              }
+
                               dispatch(
                                 PhotoDeleteRequested(
                                   id: find<AlbumCurrentStore>().stream.value,
@@ -113,15 +143,55 @@ class AlbumBottomNavigationComponent extends Component {
 
                               Navigator.of(context).pop();
                             },
-                            child: const Text("현재 사진 삭제"),
+                            child: const Text(
+                              "현재 사진 삭제",
+                              style: TextStyle(
+                                color: CupertinoColors.destructiveRed,
+                              ),
+                            ),
                           ),
                         CupertinoActionSheetAction(
-                          onPressed: () {
+                          onPressed: () async {
+                            final bool ok = await showCupertinoDialog(
+                              context: context,
+                              builder: (context) {
+                                return CupertinoAlertDialog(
+                                  title: const Text("경고"),
+                                  content: const Text(
+                                    "더 이상 앨범을 볼 수 없게 됩니다.\n앨범을 나가시겠습니까?",
+                                  ),
+                                  actions: [
+                                    CupertinoButton(
+                                      child: const Text("취소"),
+                                      onPressed: () {
+                                        Navigator.pop(context, false);
+                                      },
+                                    ),
+                                    CupertinoButton(
+                                      child: const Text("확인"),
+                                      onPressed: () {
+                                        Navigator.pop(context, true);
+                                      },
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+
+                            if (!ok) {
+                              return;
+                            }
+
                             dispatch(AlbumExitRequested(id));
 
                             Navigator.of(context).pop();
                           },
-                          child: const Text("앨범 나가기"),
+                          child: const Text(
+                            "앨범 나가기",
+                            style: TextStyle(
+                              color: CupertinoColors.destructiveRed,
+                            ),
+                          ),
                         )
                       ],
                       cancelButton: CupertinoActionSheetAction(

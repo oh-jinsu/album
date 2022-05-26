@@ -24,12 +24,6 @@ class AutoSignInEffect extends Effect with ClientEffectMixin {
           }).post("auth/refresh"));
 
       if (response is! SuccessResponse) {
-        if (response is FailureResponse && response.code == 1) {
-          dispatch(
-            const DialogRequested("계정 보안을 위해 로그아웃되었어요. 다시 로그인해 주세요."),
-          );
-        }
-
         return dispatch(const GuestSignInRequested());
       }
 
