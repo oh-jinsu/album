@@ -1,0 +1,3 @@
+class ProfileFormPending {
+  const ProfileFormPending();
+}

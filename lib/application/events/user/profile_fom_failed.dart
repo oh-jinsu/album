@@ -1,0 +1,3 @@
+class ProfileFormFailed {
+  const ProfileFormFailed();
+}

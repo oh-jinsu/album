@@ -16,7 +16,7 @@ class Client {
 
   File? _file;
 
-  Map<String, dynamic>? _body;
+  Object? _body;
 
   final Map<String, String> _headers = {};
 
@@ -44,7 +44,7 @@ class Client {
     return this;
   }
 
-  Client body(Map<String, dynamic> body) {
+  Client body(Object body) {
     _body = body;
 
     return this;
@@ -58,12 +58,6 @@ class Client {
 
   Future<Response> _request(String method, String endpoint) async {
     final uri = Uri.parse("$_host/$endpoint");
-
-    Debug.log("""
-Requested $uri ($method)
-headers: $_headers
-payload: $_body
-""");
 
     final response = await _load(_file, _body)(method)(uri, headers: _headers);
 
@@ -89,8 +83,7 @@ body: ${response.body}
     return FailureResponse(code: code, message: message);
   }
 
-  static _Fetcher Function(String method) _load(
-      File? file, Map<String, dynamic>? body) {
+  static _Fetcher Function(String method) _load(File? file, Object? body) {
     if (file != null) {
       return _requestWithFile(file);
     } else {
@@ -99,11 +92,16 @@ body: ${response.body}
   }
 
   static _Fetcher Function(String method) _requestWithPayloadIfExists(
-    Map<String, dynamic>? body,
+    Object? body,
   ) {
     return (method) {
       return (uri, {headers}) async {
         if (method == "GET") {
+          Debug.log("""
+Requested $uri ($method)
+headers: $headers
+""");
+
           return http.get(uri, headers: headers);
         }
 
@@ -122,7 +120,20 @@ body: ${response.body}
 
         headers ??= {};
 
-        headers["Content-Type"] = "application/json;charset=utf-8";
+        final contentType = () {
+          switch (method) {
+            default:
+              return "application/json";
+          }
+        }();
+
+        headers["Content-Type"] = "$contentType;charset=utf-8";
+
+        Debug.log("""
+Requested $uri ($method)
+headers: $headers
+payload: $body
+""");
 
         return fetcher(
           uri,

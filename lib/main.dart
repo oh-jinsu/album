@@ -13,7 +13,7 @@ import 'package:album/application/effects/invitation/invitation.dart';
 import 'package:album/application/effects/app/navigation.dart';
 import 'package:album/application/effects/app/fetch_album_list_after_sign_in.dart';
 import 'package:album/application/effects/app/fetch_user_after_sign_in.dart';
-import 'package:album/application/effects/user/precache_found_user.dart';
+import 'package:album/application/effects/user/precache_user.dart';
 import 'package:album/application/events/app/started.dart';
 import 'package:album/application/stores/film.dart';
 import 'package:album/application/stores/list_of_album.dart';
@@ -24,6 +24,7 @@ import 'package:album/presentation/album/page.dart';
 import 'package:album/presentation/help/page.dart';
 import 'package:album/presentation/home/page.dart';
 import 'package:album/presentation/profile/page.dart';
+import 'package:album/presentation/profile_editor/page.dart';
 import 'package:album/presentation/shop/page.dart';
 import 'package:album/presentation/signin/page.dart';
 import 'package:album/presentation/signup/page.dart';
@@ -52,7 +53,7 @@ class App extends Component {
     useEffect(() => SignOutEffect());
     useEffect(() => FetchUserAfterSignInEffect());
     useEffect(() => FetchAlbumListAfterSignInEffect());
-    useEffect(() => PrecacheFoundUserEffect());
+    useEffect(() => PrecacheUserEffect());
     useEffect(() => PrecacheFoundAlbumListEffect());
     useEffect(() => CountFilmEffect());
     useEffect(() => FetchListOfShopItemEffect());
@@ -116,6 +117,19 @@ class App extends Component {
           return CupertinoPageRoute(
             settings: settings,
             builder: (context) => const ProfilePage(),
+          );
+        }
+
+        if (settings.name == "/profile/edit") {
+          final arguments = settings.arguments as Map;
+
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => ProfileEditorPage(
+              name: arguments["name"],
+              email: arguments["email"],
+              avatar: arguments["avatar"],
+            ),
           );
         }
 

@@ -4,6 +4,7 @@ import 'package:album/application/events/album/precached_added.dart';
 import 'package:album/application/events/album/precached_list_of_found.dart';
 import 'package:album/application/events/photo/deleted.dart';
 import 'package:album/application/events/photo/precached_added.dart';
+import 'package:album/application/events/user/update_precached.dart';
 import 'package:album/application/models/album/list_of.dart';
 import 'package:album/application/models/common/argument.dart';
 import "package:codux/codux.dart";
@@ -69,6 +70,20 @@ class ListOfAlbumStore extends Store<ListOfAlbumModel> {
           }
 
           return e.copy(photoCount: New(e.photoCount - 1));
+        }).toList()),
+      );
+    });
+    on<UpdatedUserPrecached>((current, event) {
+      return current.state.copy(
+        items: New(current.state.items.map((item) {
+          return item.copy(
+              friends: New(item.friends.map((friend) {
+            if (friend.id != event.model.id) {
+              return friend;
+            }
+
+            return friend.copy(avatarImageUri: New(event.model.avatarImageUri));
+          }).toList()));
         }).toList()),
       );
     });

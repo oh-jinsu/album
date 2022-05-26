@@ -1,0 +1,3 @@
+class ProfileFormAvatarPickerTapped {
+  const ProfileFormAvatarPickerTapped();
+}

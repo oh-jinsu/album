@@ -57,11 +57,18 @@ class ProfilePage extends Component {
                                 ),
                               ),
                             ],
+                            const SizedBox(height: 24.0),
                             CupertinoFormSection(
-                              header: const Text("계정"),
                               children: [
                                 FormMenu(
-                                  onTap: () {},
+                                  onTap: () => dispatch(Pushed(
+                                    "/profile/edit",
+                                    arguments: {
+                                      "name": data.value.name,
+                                      "email": data.value.email,
+                                      "avatar": data.value.avatarImageUri,
+                                    },
+                                  )),
                                   prefix: const Text("이름, 이메일, 프로필 사진"),
                                   child: const Icon(
                                     CupertinoIcons.chevron_forward,
@@ -72,7 +79,7 @@ class ProfilePage extends Component {
                                 FormMenu(
                                   onTap: () {},
                                   prefix: const Text(
-                                    "구매 내역",
+                                    "계정",
                                   ),
                                   child: const Icon(
                                     CupertinoIcons.chevron_forward,
