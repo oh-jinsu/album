@@ -48,14 +48,12 @@ class SignUpFormStore extends Store<SignUpFormModel> {
       );
 
       if (_isValidated(nameValidatedState)) {
-        return nameChangedState.copy(
+        return nameValidatedState.copy(
           state: const New(SubmitFormState.enabled),
         );
       }
 
-      return nameValidatedState.copy(
-        nameMessage: const New(null),
-      );
+      return nameValidatedState;
     });
     on<SignUpFormEmailChanged>((current, event) {
       return current.state.copy(email: New(event.value));
