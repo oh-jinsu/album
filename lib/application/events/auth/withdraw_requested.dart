@@ -1,0 +1,3 @@
+class WithdrawRequested {
+  const WithdrawRequested();
+}

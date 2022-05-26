@@ -77,7 +77,8 @@ class ProfilePage extends Component {
                                   ),
                                 ),
                                 FormMenu(
-                                  onTap: () {},
+                                  onTap: () =>
+                                      dispatch(const Pushed("/account")),
                                   prefix: const Text(
                                     "계정",
                                   ),

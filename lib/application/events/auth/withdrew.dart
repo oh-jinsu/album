@@ -1,0 +1,3 @@
+class Withdrew {
+  const Withdrew();
+}

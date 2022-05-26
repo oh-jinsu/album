@@ -20,6 +20,7 @@ import 'package:album/application/stores/list_of_album.dart';
 import 'package:album/application/stores/shop.dart';
 import 'package:album/application/stores/sign_out_form.dart';
 import 'package:album/application/stores/user.dart';
+import 'package:album/presentation/account/page.dart';
 import 'package:album/presentation/album/page.dart';
 import 'package:album/presentation/help/page.dart';
 import 'package:album/presentation/home/page.dart';
@@ -110,6 +111,13 @@ class App extends Component {
           return CupertinoPageRoute(
             settings: settings,
             builder: (context) => const ShopPage(),
+          );
+        }
+
+        if (settings.name == "/account") {
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const AccountPage(),
           );
         }
 
