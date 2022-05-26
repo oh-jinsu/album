@@ -3,7 +3,7 @@ import 'package:album/presentation/album/widgets/floor.dart';
 import 'package:flutter/cupertino.dart';
 
 class PhotoStackWidget extends StatefulWidget {
-  final void Function(String)? onTopItemChanged;
+  final void Function(String?)? onTopItemChanged;
   final String albumId;
   final List<PhotoModel> items;
 
@@ -92,6 +92,8 @@ class _PhotoStackWidgetState extends State<PhotoStackWidget> {
   Widget build(BuildContext context) {
     if (_items.isNotEmpty) {
       widget.onTopItemChanged?.call(_items.last.id);
+    } else {
+      widget.onTopItemChanged?.call(null);
     }
 
     return Stack(

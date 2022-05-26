@@ -33,27 +33,6 @@ class AlbumBottomNavigationComponent extends Component {
     super.onCreated(context);
   }
 
-  bool _canDeleteCurrent() {
-    if (!find<AlbumCurrentStore>().stream.hasValue) {
-      return false;
-    }
-
-    final user = find<UserStore>().stream.value;
-
-    if (user is! Some<UserModel>) {
-      return true;
-    }
-
-    final photos = find<ListOfPhotoStore>().stream.value;
-
-    final photo = photos.items.firstWhere(
-        (element) => element.id == find<AlbumCurrentStore>().stream.value);
-
-    final owner = photo.userId;
-
-    return owner == user.value.id;
-  }
-
   @override
   Widget render(BuildContext context) {
     return Container(
@@ -101,55 +80,84 @@ class AlbumBottomNavigationComponent extends Component {
                   builder: (context) {
                     return CupertinoActionSheet(
                       actions: [
-                        if (_canDeleteCurrent())
-                          CupertinoActionSheetAction(
-                            onPressed: () async {
-                              final bool ok = await showCupertinoDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CupertinoAlertDialog(
-                                    title: const Text("경고"),
-                                    content: const Text(
-                                      "이 앨범에 저장된 사진을 지웁니다.\n계속하시겠습니까?",
-                                    ),
-                                    actions: [
-                                      CupertinoButton(
-                                        child: const Text("취소"),
-                                        onPressed: () {
-                                          Navigator.pop(context, false);
-                                        },
-                                      ),
-                                      CupertinoButton(
-                                        child: const Text("확인"),
-                                        onPressed: () {
-                                          Navigator.pop(context, true);
-                                        },
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
+                        StreamBuilder(
+                          stream: find<AlbumCurrentStore>().stream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              final data = snapshot.data as Option<String>;
 
-                              if (!ok) {
-                                return;
+                              if (data is! Some<String>) {
+                                return Container();
                               }
 
-                              dispatch(
-                                PhotoDeleteRequested(
-                                  id: find<AlbumCurrentStore>().stream.value,
-                                  albumId: id,
+                              final user = find<UserStore>().stream.value;
+
+                              if (user is Some<UserModel>) {
+                                final photos =
+                                    find<ListOfPhotoStore>().stream.value;
+
+                                final photo = photos.items.firstWhere(
+                                    (element) => element.id == data.value);
+
+                                final owner = photo.userId;
+
+                                if (owner != user.value.id) {
+                                  return Container();
+                                }
+                              }
+
+                              return CupertinoActionSheetAction(
+                                onPressed: () async {
+                                  final bool ok = await showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return CupertinoAlertDialog(
+                                        title: const Text("경고"),
+                                        content: const Text(
+                                          "현재 앨범에서 사진을 삭제합니다.\n계속하시겠습니까?",
+                                        ),
+                                        actions: [
+                                          CupertinoButton(
+                                            child: const Text("취소"),
+                                            onPressed: () {
+                                              Navigator.pop(context, false);
+                                            },
+                                          ),
+                                          CupertinoButton(
+                                            child: const Text("확인"),
+                                            onPressed: () {
+                                              Navigator.pop(context, true);
+                                            },
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  if (!ok) {
+                                    return;
+                                  }
+
+                                  dispatch(
+                                    PhotoDeleteRequested(
+                                      id: data.value,
+                                      albumId: id,
+                                    ),
+                                  );
+
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  "보고 있는 사진 삭제",
+                                  style: TextStyle(
+                                    color: CupertinoColors.destructiveRed,
+                                  ),
                                 ),
                               );
-
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text(
-                              "현재 사진 삭제",
-                              style: TextStyle(
-                                color: CupertinoColors.destructiveRed,
-                              ),
-                            ),
-                          ),
+                            }
+                            return Container();
+                          },
+                        ),
                         CupertinoActionSheetAction(
                           onPressed: () async {
                             final bool ok = await showCupertinoDialog(
@@ -198,9 +206,6 @@ class AlbumBottomNavigationComponent extends Component {
                         onPressed: () => Navigator.of(context).pop(),
                         child: const Text(
                           "취소",
-                          style: TextStyle(
-                            color: CupertinoColors.destructiveRed,
-                          ),
                         ),
                       ),
                     );
