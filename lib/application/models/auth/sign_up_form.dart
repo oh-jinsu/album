@@ -9,7 +9,7 @@ class SignUpFormModel {
   final String? nameMessage;
   final String email;
   final String? emailMessage;
-  final bool isServiceAgreed;
+  // final bool isServiceAgreed;
   final bool isPrivacyAgreed;
   final SubmitFormState state;
 
@@ -19,7 +19,7 @@ class SignUpFormModel {
     required this.nameMessage,
     required this.email,
     required this.emailMessage,
-    required this.isServiceAgreed,
+    // required this.isServiceAgreed,
     required this.isPrivacyAgreed,
     required this.state,
   });
@@ -30,7 +30,7 @@ class SignUpFormModel {
     New<String?>? nameMessage,
     New<String>? email,
     New<String?>? emailMessage,
-    New<bool>? isServiceAgreed,
+    // New<bool>? isServiceAgreed,
     New<bool>? isPrivacyAgreed,
     New<SubmitFormState>? state,
   }) {
@@ -41,9 +41,9 @@ class SignUpFormModel {
       email: email != null ? email.value : this.email,
       emailMessage:
           emailMessage != null ? emailMessage.value : this.emailMessage,
-      isServiceAgreed: isServiceAgreed != null
-          ? isServiceAgreed.value
-          : this.isServiceAgreed,
+      // isServiceAgreed: isServiceAgreed != null
+      //     ? isServiceAgreed.value
+      //     : this.isServiceAgreed,
       isPrivacyAgreed: isPrivacyAgreed != null
           ? isPrivacyAgreed.value
           : this.isPrivacyAgreed,

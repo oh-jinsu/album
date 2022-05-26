@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:album/application/effects/sign_in/sign_in.dart';
 import 'package:album/application/effects/sign_in/sign_in_with_apple.dart';
 import 'package:album/application/effects/sign_in/sign_in_with_google.dart';
@@ -52,22 +54,24 @@ class SignInPage extends Component {
                     const Spacer(flex: 3),
                     const SignInDescription(),
                     const SizedBox(height: 48.0),
-                    Center(
-                      child: SignInButton(
-                        Buttons.AppleDark,
-                        onPressed: () {
-                          if (model.isPending) {
-                            return;
-                          }
+                    if (Platform.isIOS) ...[
+                      Center(
+                        child: SignInButton(
+                          Buttons.AppleDark,
+                          onPressed: () {
+                            if (model.isPending) {
+                              return;
+                            }
 
-                          dispatch(const AppleSignInRequested());
-                        },
-                        text: "Apple로 로그인",
+                            dispatch(const AppleSignInRequested());
+                          },
+                          text: "Apple로 로그인",
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                    ],
                     Center(
                       child: SignInButton(
                         Buttons.GoogleDark,

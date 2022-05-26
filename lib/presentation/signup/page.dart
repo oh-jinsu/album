@@ -5,7 +5,6 @@ import 'package:album/application/events/auth/sign_up_form_email_changed.dart';
 import 'package:album/application/events/auth/sign_up_form_image_picker_tapped.dart';
 import 'package:album/application/events/auth/sign_up_form_name_changed.dart';
 import 'package:album/application/events/auth/sign_up_form_privacy_agreement_changed.dart';
-import 'package:album/application/events/auth/sign_up_form_service_agreement_changed.dart';
 import 'package:album/application/events/auth/sign_up_form_submitted.dart';
 import 'package:album/application/models/auth/sign_up_form.dart';
 import 'package:album/application/models/common/state.dart';
@@ -17,6 +16,7 @@ import 'package:album/presentation/signup/widgets/radio_box.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpPage extends Component {
   final String provider;
@@ -167,39 +167,39 @@ class SignUpPage extends Component {
                 CupertinoFormSection(
                   header: const Text("동의"),
                   children: [
-                    CupertinoFormRow(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      prefix: GestureDetector(
-                        onTap: () => dispatch(SignUpFormServiceAgreementChanged(
-                          !model.isServiceAgreed,
-                        )),
-                        child: Container(
-                          color: Colors.transparent,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12.0,
-                            horizontal: 20.0,
-                          ),
-                          child: Row(
-                            children: [
-                              AppRadioBox(enabled: model.isServiceAgreed),
-                              const SizedBox(width: 8.0),
-                              const Text(
-                                "서비스이용약관",
-                                style: TextStyle(height: 1.3),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      child: Button(
-                        onPressed: () {},
-                        child: const Icon(
-                          CupertinoIcons.chevron_forward,
-                          size: 20.0,
-                          color: CupertinoColors.systemGrey3,
-                        ),
-                      ),
-                    ),
+                    // CupertinoFormRow(
+                    //   padding: const EdgeInsets.only(right: 12.0),
+                    //   prefix: GestureDetector(
+                    //     onTap: () => dispatch(SignUpFormServiceAgreementChanged(
+                    //       !model.isServiceAgreed,
+                    //     )),
+                    //     child: Container(
+                    //       color: Colors.transparent,
+                    //       padding: const EdgeInsets.symmetric(
+                    //         vertical: 12.0,
+                    //         horizontal: 20.0,
+                    //       ),
+                    //       child: Row(
+                    //         children: [
+                    //           AppRadioBox(enabled: model.isServiceAgreed),
+                    //           const SizedBox(width: 8.0),
+                    //           const Text(
+                    //             "서비스이용약관",
+                    //             style: TextStyle(height: 1.3),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   child: Button(
+                    //     onPressed: () {},
+                    //     child: const Icon(
+                    //       CupertinoIcons.chevron_forward,
+                    //       size: 20.0,
+                    //       color: CupertinoColors.systemGrey3,
+                    //     ),
+                    //   ),
+                    // ),
                     CupertinoFormRow(
                       padding: const EdgeInsets.only(right: 12.0),
                       prefix: GestureDetector(
@@ -225,7 +225,12 @@ class SignUpPage extends Component {
                         ),
                       ),
                       child: Button(
-                        onPressed: () {},
+                        onPressed: () {
+                          final url = Uri.parse(
+                              "https://github.com/oh-jinsu/album/blob/main/privacy.md");
+
+                          launchUrl(url);
+                        },
                         child: const Icon(
                           CupertinoIcons.chevron_forward,
                           size: 20.0,

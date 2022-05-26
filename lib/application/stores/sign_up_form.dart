@@ -3,7 +3,6 @@ import 'package:album/application/events/auth/sign_up_form_email_changed.dart';
 import 'package:album/application/events/auth/sign_up_form_name_changed.dart';
 import 'package:album/application/events/auth/sign_up_form_pending.dart';
 import 'package:album/application/events/auth/sign_up_form_privacy_agreement_changed.dart';
-import 'package:album/application/events/auth/sign_up_form_service_agreement_changed.dart';
 import 'package:album/application/models/auth/sign_up_form.dart';
 import 'package:album/application/models/common/argument.dart';
 import 'package:album/application/models/common/state.dart';
@@ -15,7 +14,7 @@ const initialState = SignUpFormModel(
   nameMessage: null,
   email: "",
   emailMessage: null,
-  isServiceAgreed: false,
+  // isServiceAgreed: false,
   isPrivacyAgreed: false,
   state: SubmitFormState.disabled,
 );
@@ -61,21 +60,21 @@ class SignUpFormStore extends Store<SignUpFormModel> {
     on<SignUpFormEmailChanged>((current, event) {
       return current.state.copy(email: New(event.value));
     });
-    on<SignUpFormServiceAgreementChanged>((current, event) {
-      final serviceAgreementChangedState = current.state.copy(
-        isServiceAgreed: New(event.value),
-      );
+    // on<SignUpFormServiceAgreementChanged>((current, event) {
+    //   final serviceAgreementChangedState = current.state.copy(
+    //     isServiceAgreed: New(event.value),
+    //   );
 
-      if (_isValidated(serviceAgreementChangedState)) {
-        return serviceAgreementChangedState.copy(
-          state: const New(SubmitFormState.enabled),
-        );
-      }
+    //   if (_isValidated(serviceAgreementChangedState)) {
+    //     return serviceAgreementChangedState.copy(
+    //       state: const New(SubmitFormState.enabled),
+    //     );
+    //   }
 
-      return serviceAgreementChangedState.copy(
-        state: const New(SubmitFormState.disabled),
-      );
-    });
+    //   return serviceAgreementChangedState.copy(
+    //     state: const New(SubmitFormState.disabled),
+    //   );
+    // });
     on<SignUpFormPrivacyAgreementChanged>((current, event) {
       final privacyAgreementChangedState = current.state.copy(
         isPrivacyAgreed: New(event.value),
@@ -101,9 +100,9 @@ class SignUpFormStore extends Store<SignUpFormModel> {
       return false;
     }
 
-    if (!state.isServiceAgreed) {
-      return false;
-    }
+    // if (!state.isServiceAgreed) {
+    //   return false;
+    // }
 
     if (state.name.isEmpty) {
       return false;
