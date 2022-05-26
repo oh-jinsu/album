@@ -10,6 +10,7 @@ import 'package:album/presentation/common/widgets/avatar.dart';
 import 'package:album/presentation/profile/widgets/menu.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends Component {
   const ProfilePage({Key? key}) : super(key: key);
@@ -100,16 +101,12 @@ class ProfilePage extends Component {
                             header: const Text("일반"),
                             children: [
                               ProfileMenu(
-                                onTap: () {},
-                                prefix: const Text("서비스이용약관"),
-                                child: const Icon(
-                                  CupertinoIcons.chevron_forward,
-                                  size: 20.0,
-                                  color: CupertinoColors.systemGrey3,
-                                ),
-                              ),
-                              ProfileMenu(
-                                onTap: () {},
+                                onTap: () {
+                                  final url = Uri.parse(
+                                      "https://github.com/oh-jinsu/album/blob/main/privacy.md");
+
+                                  launchUrl(url);
+                                },
                                 prefix: const Text("개인정보처리방침"),
                                 child: const Icon(
                                   CupertinoIcons.chevron_forward,

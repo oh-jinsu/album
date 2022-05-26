@@ -1,5 +1,4 @@
 import 'package:album/application/effects/common/client.dart';
-import 'package:album/application/events/app/dialog_requested.dart';
 import 'package:album/application/events/auth/signed_in.dart';
 import 'package:album/application/events/bootstrap/bootstrap_finished.dart';
 import 'package:album/application/events/signin/guest_sign_in_requested.dart';
