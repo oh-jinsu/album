@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
-class ProfileMenu extends StatelessWidget {
+class FormMenu extends StatelessWidget {
   final void Function() onTap;
   final Widget prefix;
   final Widget? child;
 
-  const ProfileMenu({
+  const FormMenu({
     Key? key,
     required this.onTap,
     required this.prefix,

@@ -7,7 +7,7 @@ import 'package:album/application/stores/sign_out_form.dart';
 import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/common/components/bottom_navigation.dart';
 import 'package:album/presentation/common/widgets/avatar.dart';
-import 'package:album/presentation/profile/widgets/menu.dart';
+import 'package:album/presentation/common/widgets/menu.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -60,7 +60,7 @@ class ProfilePage extends Component {
                             CupertinoFormSection(
                               header: const Text("계정"),
                               children: [
-                                ProfileMenu(
+                                FormMenu(
                                   onTap: () {},
                                   prefix: const Text("이름, 이메일, 프로필 사진"),
                                   child: const Icon(
@@ -69,7 +69,7 @@ class ProfilePage extends Component {
                                     color: CupertinoColors.systemGrey3,
                                   ),
                                 ),
-                                ProfileMenu(
+                                FormMenu(
                                   onTap: () {},
                                   prefix: const Text(
                                     "구매 내역",
@@ -86,7 +86,7 @@ class ProfilePage extends Component {
                             CupertinoFormSection(
                               header: const Text("계정"),
                               children: [
-                                ProfileMenu(
+                                FormMenu(
                                   onTap: () =>
                                       dispatch(const Pushed("/signin")),
                                   prefix: const Text(
@@ -100,7 +100,7 @@ class ProfilePage extends Component {
                           CupertinoFormSection(
                             header: const Text("일반"),
                             children: [
-                              ProfileMenu(
+                              FormMenu(
                                 onTap: () {
                                   final url = Uri.parse(
                                       "https://github.com/oh-jinsu/album/blob/main/privacy.md");
@@ -114,8 +114,8 @@ class ProfilePage extends Component {
                                   color: CupertinoColors.systemGrey3,
                                 ),
                               ),
-                              ProfileMenu(
-                                onTap: () {},
+                              FormMenu(
+                                onTap: () => dispatch(const Pushed("/help")),
                                 prefix: const Text("도움말 및 문의"),
                                 child: const Icon(
                                   CupertinoIcons.chevron_forward,
@@ -136,7 +136,7 @@ class ProfilePage extends Component {
                                       final data =
                                           snapshot.data as SignOutFormModel;
 
-                                      return ProfileMenu(
+                                      return FormMenu(
                                         onTap: () {
                                           if (data.isPending) {
                                             return;

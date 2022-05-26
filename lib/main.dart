@@ -21,6 +21,7 @@ import 'package:album/application/stores/shop.dart';
 import 'package:album/application/stores/sign_out_form.dart';
 import 'package:album/application/stores/user.dart';
 import 'package:album/presentation/album/page.dart';
+import 'package:album/presentation/help/page.dart';
 import 'package:album/presentation/home/page.dart';
 import 'package:album/presentation/profile/page.dart';
 import 'package:album/presentation/shop/page.dart';
@@ -136,6 +137,13 @@ class App extends Component {
               name: arguments["name"],
               email: arguments["email"],
             ),
+          );
+        }
+
+        if (settings.name == "/help") {
+          return CupertinoPageRoute(
+            settings: settings,
+            builder: (context) => const HelpPage(),
           );
         }
 
