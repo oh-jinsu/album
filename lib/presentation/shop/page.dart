@@ -80,7 +80,7 @@ class ShopPage extends Component {
                   ),
                   const SizedBox(height: 12.0),
                   const Text(
-                    "월요일마다 필름을 한 장씩 드리고 있어요!",
+                    "일요일마다 필름을 한 장씩 드리고 있어요!",
                     style: TextStyle(
                       fontSize: 14.0,
                       color: CupertinoColors.secondaryLabel,

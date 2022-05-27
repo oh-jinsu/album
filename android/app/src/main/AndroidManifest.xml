@@ -7,7 +7,7 @@
         </intent>
     </queries>
    <application
-        android:label="album"
+        android:label="추억보관함"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
