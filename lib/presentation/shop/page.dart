@@ -63,7 +63,7 @@ class ShopPage extends Component {
                                 text: "🌁 ",
                               ),
                               TextSpan(
-                                text: "$data개",
+                                text: "$data장",
                                 style: const TextStyle(
                                   fontSize: 24.0,
                                   color: CupertinoColors.activeBlue,
@@ -104,25 +104,25 @@ class ShopPage extends Component {
                 ShopMenu(
                   isPending: false,
                   onPressed: () => _onItemTap(context, 0),
-                  label: "필름 10개",
+                  label: "필름 10장",
                   price: "￦1200",
                 ),
                 ShopMenu(
                   isPending: false,
                   onPressed: () => _onItemTap(context, 1),
-                  label: "필름 25개",
+                  label: "필름 25장",
                   price: "￦2500",
                 ),
                 ShopMenu(
                   isPending: false,
                   onPressed: () => _onItemTap(context, 2),
-                  label: "필름 50개",
+                  label: "필름 50장",
                   price: "￦4900",
                 ),
                 ShopMenu(
                   isPending: false,
                   onPressed: () => _onItemTap(context, 3),
-                  label: "필름 100개",
+                  label: "필름 100장",
                   price: "￦8900",
                 )
               ],
@@ -148,9 +148,17 @@ class ShopPage extends Component {
       showCupertinoDialog(
         context: context,
         builder: (context) {
-          return const CupertinoAlertDialog(
-            title: Text("안내"),
-            content: Text("일시적인 오류입니다. 나중에 다시 시도해 주세요."),
+          return CupertinoAlertDialog(
+            title: const Text("안내"),
+            content: const Text("일시적인 오류입니다.\n나중에 다시 시도해 주세요."),
+            actions: [
+              CupertinoButton(
+                child: const Text("확인"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
           );
         },
       );
