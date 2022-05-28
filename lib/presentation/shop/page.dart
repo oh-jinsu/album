@@ -1,7 +1,7 @@
 import 'package:album/application/events/shop/purchase_requested.dart';
-import 'package:album/application/models/shop/item.dart';
 import 'package:album/application/stores/film.dart';
 import 'package:album/application/stores/shop.dart';
+import 'package:album/presentation/shop/widgets/menu.dart';
 import 'package:codux/codux.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -99,72 +99,61 @@ class ShopPage extends Component {
                 ),
               ),
             ),
-            StreamBuilder(
-              stream: find<ShopStore>().stream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final data = snapshot.data as List<ShopItemModel>;
-
-                  return CupertinoFormSection.insetGrouped(
-                    // header: const Text("상품"),
-                    children: [
-                      for (final item in data)
-                        CupertinoFormRow(
-                          padding: const EdgeInsets.only(
-                            top: 12.0,
-                            bottom: 12.0,
-                            left: 16.0,
-                            right: 8.0,
-                          ),
-                          prefix: Row(
-                            children: [
-                              Text("🌁 " + item.details.title),
-                            ],
-                          ),
-                          child: CupertinoButton(
-                            color: CupertinoColors.systemGroupedBackground,
-                            minSize: 28.0,
-                            borderRadius: BorderRadius.circular(32.0),
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4.0,
-                            ),
-                            child: SizedBox(
-                              width: 84.0,
-                              child: Center(
-                                child: item.isPending
-                                    ? const CupertinoActivityIndicator(
-                                        color: CupertinoColors.activeBlue,
-                                      )
-                                    : Text(
-                                        item.details.price,
-                                        style: const TextStyle(
-                                          fontSize: 15.0,
-                                          color: CupertinoColors.activeBlue,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                              ),
-                            ),
-                            onPressed: () {
-                              if (item.isPending) {
-                                return;
-                              }
-
-                              dispatch(
-                                PurchaseRequested(item.details),
-                              );
-                            },
-                          ),
-                        )
-                    ],
-                  );
-                }
-                return Container();
-              },
-            )
+            CupertinoFormSection.insetGrouped(
+              children: [
+                ShopMenu(
+                  isPending: false,
+                  onPressed: () => _onItemTap(context, 0),
+                  label: "필름 10개",
+                  price: "￦1200",
+                ),
+                ShopMenu(
+                  isPending: false,
+                  onPressed: () => _onItemTap(context, 1),
+                  label: "필름 25개",
+                  price: "￦2500",
+                ),
+                ShopMenu(
+                  isPending: false,
+                  onPressed: () => _onItemTap(context, 2),
+                  label: "필름 50개",
+                  price: "￦4900",
+                ),
+                ShopMenu(
+                  isPending: false,
+                  onPressed: () => _onItemTap(context, 3),
+                  label: "필름 100개",
+                  price: "￦8900",
+                )
+              ],
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void _onItemTap(BuildContext context, int index) {
+    try {
+      final items = find<ShopStore>().stream.value;
+
+      final item = items[index];
+
+      if (item.isPending) {
+        return;
+      }
+
+      dispatch(PurchaseRequested(item.details));
+    } catch (e) {
+      showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return const CupertinoAlertDialog(
+            title: Text("안내"),
+            content: Text("일시적인 오류입니다. 나중에 다시 시도해 주세요."),
+          );
+        },
+      );
+    }
   }
 }
