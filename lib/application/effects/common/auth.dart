@@ -56,10 +56,6 @@ mixin AuthEffectMixin on Effect {
             await authRepository.saveAccessToken(accessToken);
 
             return withAuth(request);
-          case 104:
-            await Navigator.of(requireContext()).pushNamed("/signin");
-
-            return withAuth(request);
         }
       }
 
