@@ -48,9 +48,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>사진을 찍기 위해 카메라 앱에 접근합니다. 사진은 계속하려는 기능을 위해 사용되며 추적되지 않습니다.</string>
+	<string>사진을 앨범에 저장하거나 프로필 사진으로 이용하기 위해 카메라 앱에 접근합니다.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>사진을 불러오기 위해 사진 앱에 접근합니다. 사진은 계속하려는 기능을 위해 사용되며 추적되지 않습니다.</string>
+	<string>사진을 앨범에 저장하거나 프로필 사진으로 이용하기 위해 사진 앱에 접근합니다.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
