@@ -35,11 +35,11 @@ class AlbumBottomNavigationComponent extends Component {
 
   @override
   Widget render(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 16.0),
-      color: CupertinoColors.systemBackground,
-      child: SafeArea(
-        top: false,
+    return SafeArea(
+      top: false,
+      child: Container(
+        padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+        color: CupertinoColors.systemBackground,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
