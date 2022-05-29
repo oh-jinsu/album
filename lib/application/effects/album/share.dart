@@ -16,7 +16,7 @@ class ShareAlbumEffect extends Effect with AuthEffectMixin {
 
       final accessToken = await authRepository.findAccessToken();
 
-      if (accessToken != null) {
+      if (accessToken == null) {
         dispatch(const Popped());
 
         dispatch(const Replaced("/signin"));
