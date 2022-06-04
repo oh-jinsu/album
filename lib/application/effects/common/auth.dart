@@ -5,7 +5,6 @@ import 'package:album/infrastructure/services/client/client.dart';
 import 'package:album/infrastructure/services/client/response.dart';
 import 'package:codux/codux.dart';
 import 'package:album/utilities/dependency.dart';
-import 'package:flutter/cupertino.dart';
 
 mixin AuthEffectMixin on Effect {
   Future<Response> withAuth(
