@@ -3,6 +3,8 @@ import 'package:album/presentation/album/widgets/floor.dart';
 import 'package:flutter/cupertino.dart';
 
 class PhotoStackWidget extends StatefulWidget {
+  final bool hasMore;
+  final void Function()? onScrollToTheEnd;
   final void Function(String?)? onTopItemChanged;
   final String albumId;
   final List<PhotoModel> items;
@@ -10,6 +12,8 @@ class PhotoStackWidget extends StatefulWidget {
   const PhotoStackWidget({
     Key? key,
     this.onTopItemChanged,
+    this.onScrollToTheEnd,
+    required this.hasMore,
     required this.albumId,
     required this.items,
   }) : super(key: key);
@@ -23,9 +27,15 @@ class _PhotoStackWidgetState extends State<PhotoStackWidget> {
 
   List<int> _mustRemoveIndexs = [];
 
+  int skip = 0;
+
+  int take = 5;
+
   @override
   void initState() {
-    initialize();
+    take = widget.items.length;
+
+    Future.delayed(Duration.zero, next);
 
     super.initState();
   }
@@ -35,41 +45,47 @@ class _PhotoStackWidgetState extends State<PhotoStackWidget> {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.items.length < widget.items.length) {
-      final updatedList = widget.items
-          .where(
-            (newone) =>
-                oldWidget.items.every((oldone) => oldone.id != newone.id),
-          )
-          .toList()
-          .reversed;
+      final updatedList = widget.items.where(
+        (newone) => oldWidget.items.every((oldone) => oldone.id != newone.id),
+      );
 
-      setState(() {
-        _items = [
-          ...oldWidget.items.reversed,
-          ...updatedList.toList().reversed,
-        ];
-      });
+      if (_items.isEmpty) {
+        setState(() {
+          _items = [
+            ...updatedList.toList().reversed,
+          ];
+        });
+      } else {
+        setState(() {
+          _items = [
+            ..._items,
+            ...updatedList.toList().reversed,
+          ];
+        });
+      }
     }
 
     if (oldWidget.items.length > widget.items.length) {
       _mustRemoveIndexs = [];
 
-      for (int i = 0; i < oldWidget.items.length; i++) {
-        if (!widget.items.contains(oldWidget.items.reversed.toList()[i])) {
+      for (int i = 0; i < _items.length; i++) {
+        if (!widget.items.contains(_items[i])) {
           _mustRemoveIndexs.add(i);
         }
+      }
+
+      if (skip > 0) {
+        skip -= _mustRemoveIndexs.length;
       }
 
       setState(() {});
     }
   }
 
-  void initialize() async {
-    await Future.delayed(Duration.zero);
+  void next() {
+    final items = widget.items.skip(skip).take(take).toList().reversed;
 
-    setState(() {
-      _items.addAll(widget.items.reversed);
-    });
+    setState(() => _items.addAll(items));
   }
 
   void onRemove(int index) async {
@@ -85,7 +101,19 @@ class _PhotoStackWidgetState extends State<PhotoStackWidget> {
       return;
     }
 
-    initialize();
+    if (widget.hasMore) {
+      widget.onScrollToTheEnd?.call();
+    } else {
+      Future.delayed(Duration.zero, () {
+        if (skip >= widget.items.length) {
+          skip = 0;
+        }
+
+        next();
+
+        skip += take;
+      });
+    }
   }
 
   @override
