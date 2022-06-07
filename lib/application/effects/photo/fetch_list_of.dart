@@ -11,7 +11,7 @@ class FetchListOfPhotoEffect extends Effect with AuthEffectMixin {
   FetchListOfPhotoEffect() {
     on<AlbumOpened>((event) async {
       final response = await withAuth(
-        (client) => client.get("photo?album_id=${event.id}&limit=5"),
+        (client) => client.get("photo?album_id=${event.id}&limit=10"),
       );
 
       if (response is! SuccessResponse) {
@@ -25,7 +25,7 @@ class FetchListOfPhotoEffect extends Effect with AuthEffectMixin {
     on<MorePhotoRequested>((event) async {
       final response = await withAuth(
         (client) => client.get(
-          "photo?album_id=${event.albumId}&cursor=${event.cursor}&limit=5",
+          "photo?album_id=${event.albumId}&cursor=${event.cursor}&limit=10",
         ),
       );
 

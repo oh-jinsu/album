@@ -1,3 +1,4 @@
+import 'package:album/application/effects/album/change_cover.dart';
 import 'package:album/application/effects/photo/precache_added.dart';
 import 'package:album/application/stores/album_current.dart';
 import 'package:album/presentation/album/components/album_viewer.dart';
@@ -22,6 +23,7 @@ class AlbumPage extends Component {
     useStore(() => AlbumCurrentStore());
 
     useEffect(() => PrecacheAddedPhotoEffect());
+    useEffect(() => ChangeAlbumCoverEffect());
 
     super.onCreated(context);
   }

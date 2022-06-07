@@ -29,7 +29,7 @@ class _PhotoStackWidgetState extends State<PhotoStackWidget> {
 
   int skip = 0;
 
-  int take = 5;
+  int take = 10;
 
   @override
   void initState() {

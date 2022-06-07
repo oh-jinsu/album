@@ -4,7 +4,7 @@ import 'package:album/application/events/album/opened.dart';
 import 'package:album/application/events/photo/more_requested.dart';
 import 'package:album/application/models/common/option.dart';
 import 'package:album/application/models/photo/list_of_photo.dart';
-import 'package:album/application/models/photo/precache_list_of_photo.dart';
+import 'package:album/application/effects/photo/precache_list_of_photo.dart';
 import 'package:album/application/stores/list_of_photo.dart';
 import 'package:album/presentation/album/widgets/list.dart';
 import "package:codux/codux.dart";
